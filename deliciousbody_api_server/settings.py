@@ -50,6 +50,10 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'rest_auth.registration',
+
+    # kakao login
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.kakao',
 ]
 
 SITE_ID = 1
