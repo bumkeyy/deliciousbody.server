@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
 
+    # doc
+    "rest_framework_swagger",
+
     # rest-auth
     "rest_auth",
 
