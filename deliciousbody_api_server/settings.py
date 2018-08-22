@@ -60,6 +60,7 @@ INSTALLED_APPS = [
 
     # app
     'userinfo',
+    'video',
 
 ]
 

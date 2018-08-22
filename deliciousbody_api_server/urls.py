@@ -28,4 +28,5 @@ urlpatterns = [
     path('doc/', schema_view),
 
     path('userinfo/', include('userinfo.urls')),
+    path('video/', include('video.urls')),
 ]
