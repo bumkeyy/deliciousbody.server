@@ -26,6 +26,20 @@ class IsSuperUserUpdateOrReadonly(permissions.BasePermission):
 
 
 class VideoAPIViewSet(ModelViewSet):
+    """
+    # Return a Video Info
+    ---
+    영상 정보를 반환
+    video_name (string) : 영상 이름
+    level (integer) : 영상 활동 수준 (default = 1, 0 < 2)
+    part (integer) : 관련 부위 (0 < 7)
+    time (integer) : 영상 시간
+    description (string) : 영상 설명 (maxsize = 300)
+    video_url (string) : 영상 url
+    thumbnail_url (stirng) : 썸네일 url
+    create_at (DateTime) : 영상 정보 생성 시간
+    updated_at (DateTime) : 영상 정보 갱신 시간
+    """
     queryset = Video.objects.all()
     serializer_class = VideoSerializer
     permission_classes = [IsSuperUserUpdateOrReadonly]
