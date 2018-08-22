@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     # rest-auth
     "rest_auth",
 
-    # registration
+    # registrationm
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -57,6 +57,10 @@ INSTALLED_APPS = [
     # kakao login
     'allauth.socialaccount',
     'allauth.socialaccount.providers.kakao',
+
+    # app
+    'userinfo',
+
 ]
 
 SITE_ID = 1
@@ -145,6 +149,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Email login 및 username 비활성화, email 검증 비활성
