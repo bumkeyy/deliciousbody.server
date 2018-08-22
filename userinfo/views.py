@@ -16,7 +16,7 @@ class UserInfoAPIView(generics.GenericAPIView):
         # Return a User Info
         ---
         유저의 유저 정보를 반환
-
+u
         name (string) : 유저의 닉네임
         age (integer) : 유저의 나이
         is_man (boolean) : 남자인지 여자인지 (True 일때 남자)
