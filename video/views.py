@@ -32,11 +32,18 @@ class VideoAPIViewSet(ModelViewSet):
     영상 정보를 반환
     video_name (string) : 영상 이름
     level (integer) : 영상 활동 수준 (default = 1, 0 < 2)
-    part (integer) : 관련 부위 (0 < 7)
+    part1 (boolean) : 부위 1 (default = true)
+    part2 (boolean) : 부위 2 (default = false)
+    part3 (boolean) : 부위 3 (default = false)
+    part4 (boolean) : 부위 4 (default = false)
+    part5 (boolean) : 부위 5 (default = false)
+    part6 (boolean) : 부위 6 (default = false)
+    part7 (boolean) : 부위 7 (default = false)
+    part8 (boolean) : 부위 8 (default = false)
     time (integer) : 영상 시간
     description (string) : 영상 설명 (maxsize = 300)
     video_url (string) : 영상 url
-    thumbnail_url (stirng) : 썸네일 url
+    video_file (file) : 영상 file
     create_at (DateTime) : 영상 정보 생성 시간
     updated_at (DateTime) : 영상 정보 갱신 시간
     """
