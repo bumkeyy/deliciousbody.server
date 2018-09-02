@@ -14,21 +14,21 @@ class UserInfoAPIView(generics.GenericAPIView):
     def get(self, request):
         """
         # Return a User Info
-        ---
+        ---u
         유저의 유저 정보를 반환
 u
         name (string) : 유저의 닉네임
         age (integer) : 유저의 나이
         is_man (boolean) : 남자인지 여자인지 (True 일때 남자)
         activity_level (integer) : 활동 수준 (0, 1, 2, default = 1)
-        intersted_part (array): 관심 부위 (0 ~ 7, maxsize = 8)
+        intersted_part (string): 관심 부위 (0 ~ 7, maxsize = 8)
         weekdays_start (integer) : 주중 알림 시작 시간 (default = 8)
         weekdays_end (integer) : 주중 알림 종료 시간 (default = 22)
         weekdend_start (integer) : 주말 알림 시작 시간 (default = 8)
         weekdend_end (integer) : 주말 알림 종료 시간 (default = 22)
         comment (string) : 동기 부여 멘트 (maxsize = 12)
         avatar (image) : 아바타 사진 (unique = False)
-        favorite_list (array) : 하트 누른 부위
+        favorite_list (string) : 하트 누른 부위
         create_at (DateTime) : 유저 정보 생성 시간
         updated_at (DateTime) : 유저 정보 갱신 시간
         is_push (boolean) : 알림 활성화 버튼 (default = True)

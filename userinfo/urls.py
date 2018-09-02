@@ -1,6 +1,6 @@
 from django.urls import path
-from . import views
+from .views import UserInfoAPIView
 
 urlpatterns = [
-    path('', views.UserInfoAPIView.as_view()),
+    path('', UserInfoAPIView.as_view()),
 ]
