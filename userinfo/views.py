@@ -17,7 +17,7 @@ class UserInfoAPIView(generics.GenericAPIView):
         ---u
         유저의 유저 정보를 반환
 u
-        name (string) : 유저의 닉네임
+        name (string) : 유저의 닉네임 (default="name")
         age (integer) : 유저의 나이
         is_man (boolean) : 남자인지 여자인지 (True 일때 남자)
         activity_level (integer) : 활동 수준 (0, 1, 2, default = 1)
@@ -32,7 +32,6 @@ u
         create_at (DateTime) : 유저 정보 생성 시간
         updated_at (DateTime) : 유저 정보 갱신 시간
         is_push (boolean) : 알림 활성화 버튼 (default = True)
-
         """
         qs = UserInfo.objects.filter(user=self.request.user)
         serializer = UserInfoSerializer(qs, many=True)
