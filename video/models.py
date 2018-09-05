@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator, URLValidator
 
 class Video(models.Model):
-    video_name = models.CharField(max_length=30)
+    video_name = models.CharField(max_length=50)
     level = models.IntegerField(default=1, validators=[MinValueValidator(0), MaxValueValidator(2)])
     part1 = models.BooleanField(default=True)
     part2 = models.BooleanField(default=False)
@@ -16,6 +16,7 @@ class Video(models.Model):
     description = models.TextField(max_length=300)
     video_url = models.TextField(validators=[URLValidator()])
     video_file = models.FileField(upload_to="video/%Y/%m/%d")
+    video_thumbnail = models.ImageField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
