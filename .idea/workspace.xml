@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="642ce433-2aaa-4e79-a6dc-577f175aa092" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deliciousbody_api_server/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/deliciousbody_api_server/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deliciousbody_api_server/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/deliciousbody_api_server/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userinfo/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/userinfo/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/video/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/video/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userinfo/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/userinfo/models.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -41,11 +37,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/deliciousbody_api_server/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="25" column="1" lean-forward="true" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
+            <state relative-caret-position="187">
+              <caret line="11" column="9" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
               <folding>
                 <element signature="e#648#680#0" expanded="true" />
               </folding>
@@ -74,11 +70,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/userinfo/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="31" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
+            <state relative-caret-position="408">
+              <caret line="24" column="24" lean-forward="true" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -154,10 +150,10 @@
         <option value="$PROJECT_DIR$/userinfo/serializers.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/video/models.py" />
-        <option value="$PROJECT_DIR$/userinfo/models.py" />
         <option value="$PROJECT_DIR$/push/models.py" />
         <option value="$PROJECT_DIR$/deliciousbody_api_server/settings.py" />
         <option value="$PROJECT_DIR$/deliciousbody_api_server/urls.py" />
+        <option value="$PROJECT_DIR$/userinfo/models.py" />
       </list>
     </option>
   </component>
@@ -196,7 +192,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="url&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/deliciousbody_api_server/urls.py&#10;settings&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/deliciousbody_api_server/settings.py&#10;model&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/push/models.py&#10;video&#9;null&#9;null&#10;urls&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/deliciousbody_api_server/urls.py&#10;view&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/userinfo/views.py&#10;ser&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/userinfo/serializers.py&#10;er&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/userinfo/serializers.py&#10;퍋ㅈ&#9;null&#9;null&#10;admin&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/video/admin.py&#10;rls&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/deliciousbody_api_server/urls.py&#10;views&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/userinfo/views.py&#10;models&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/userinfo/models.py&#10;userinfo&#9;null&#9;null&#10;serial&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/userinfo/serializers.py&#10;odels&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/userinfo/models.py&#10;moelds&#9;null&#9;null&#10;viwe&#9;null&#9;null&#10;adm&#9;null&#9;null&#10;mode&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/userinfo/models.py" />
+    <property name="SearchEverywhereHistoryKey" value="model&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/userinfo/models.py&#10;url&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/deliciousbody_api_server/urls.py&#10;settings&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/deliciousbody_api_server/settings.py&#10;video&#9;null&#9;null&#10;urls&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/deliciousbody_api_server/urls.py&#10;view&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/userinfo/views.py&#10;ser&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/userinfo/serializers.py&#10;er&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/userinfo/serializers.py&#10;퍋ㅈ&#9;null&#9;null&#10;admin&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/video/admin.py&#10;rls&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/deliciousbody_api_server/urls.py&#10;views&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/userinfo/views.py&#10;models&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/userinfo/models.py&#10;userinfo&#9;null&#9;null&#10;serial&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/userinfo/serializers.py&#10;odels&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/userinfo/models.py&#10;moelds&#9;null&#9;null&#10;viwe&#9;null&#9;null&#10;adm&#9;null&#9;null&#10;mode&#9;FILE&#9;file:///Users/KiBeom/Desktop/WorkSpace/deliciousbody_api_server/userinfo/models.py" />
     <property name="ToolWindowTerminal.ShowToolbar" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -362,7 +358,14 @@
       <option name="project" value="LOCAL" />
       <updated>1535983989723</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="[SMTP] SMTP 설정 완료">
+      <created>1536144783182</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1536144783182</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -375,8 +378,8 @@
       <window_info anchor="bottom" id="Run" order="7" />
       <window_info anchor="bottom" id="Version Control" order="2" />
       <window_info anchor="bottom" id="Python Console" order="3" />
-      <window_info active="true" anchor="right" id="Terminal" order="5" visible="true" weight="0.45069444" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.12708333" />
+      <window_info anchor="right" id="Terminal" order="5" visible="true" weight="0.45069444" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.12708333" />
       <window_info anchor="bottom" id="Docker" order="4" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="0" />
       <window_info anchor="right" id="SciView" order="1" />
@@ -436,7 +439,8 @@
     <MESSAGE value="[Video] video filefiled 추가, 8개 부위 boolean 추가" />
     <MESSAGE value="[Video] swagger 수정" />
     <MESSAGE value="[Push] Push app 및 모델 생성" />
-    <option name="LAST_COMMIT_MESSAGE" value="[Push] Push app 및 모델 생성" />
+    <MESSAGE value="[SMTP] SMTP 설정 완료" />
+    <option name="LAST_COMMIT_MESSAGE" value="[SMTP] SMTP 설정 완료" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -660,16 +664,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/userinfo/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="31" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/push/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -689,10 +683,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/deliciousbody_api_server/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="1" lean-forward="true" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
+        <state relative-caret-position="187">
+          <caret line="11" column="9" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
           <folding>
             <element signature="e#648#680#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/userinfo/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="24" lean-forward="true" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
