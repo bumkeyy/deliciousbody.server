@@ -14,3 +14,17 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'deliciousbody_api_server.settings')
 
 application = get_wsgi_application()
+
+'''
+import os
+
+from django.core.wsgi import get_wsgi_application
+
+if os.environ.get('DEV') is True:
+   os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.dev")
+else:
+   os.environ.setdefault("DJANGO_SETTINGS_MODULE",
+   "config.settings.production")
+
+application = get_wsgi_application()
+'''

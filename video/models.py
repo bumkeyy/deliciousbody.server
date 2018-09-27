@@ -16,7 +16,7 @@ class Video(models.Model):
     description = models.TextField(max_length=300)
     video_url = models.TextField(validators=[URLValidator()])
     video_file = models.FileField(upload_to="video/%Y/%m/%d")
-    video_thumbnail = models.ImageField()
+    video_thumbnail = models.ImageField(unique=False, default='/impyage.jpg')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
