@@ -25,7 +25,7 @@ SECRET_KEY = 'vyj+o-i@817*h%%ay*a=jr@+_=1@lf2=osf30zb@q)o6_yi3m2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -48,11 +48,14 @@ INSTALLED_APPS = [
     # rest-auth
     "rest_auth",
 
-    # registrationm
+    # registration
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'rest_auth.registration',
+
+    #jwt
+    'rest_framework_jwt',
 
     # kakao login
     'allauth.socialaccount',
@@ -102,10 +105,17 @@ WSGI_APPLICATION = 'deliciousbody_api_server.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 '''
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINuE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'delicious_database',
         'USER': 'sample_user',
         'PASSWORD': 'sample_password',
@@ -113,7 +123,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -124,7 +133,7 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
+'''
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
@@ -183,11 +192,18 @@ AUTHENTICATION_BACKENDS = (
 # Token 인증 사용
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        #'rest_framework.authentication.BasicAuthentication',
-        #'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        #'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     )
 }
+
+JWT_AUTH = {
+    'JWT_ALLOW_REFRESH' : True,
+}
+
+REST_USE_JWT = True
 
 # smtp 설정
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -197,3 +213,7 @@ EMAIL_HOST_PASSWORD = '20180222as'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
+SOCIALACCOUNT_EMAIL_REQUIRED = False
+SOCIALACCOUNT_QUERY_EMAIL = True

@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 from . import views
+
 #from rest_framework_swagger.views import get_swagger_view
 
 #schema_view = get_swagger_view(title='DeliciousBody API')
@@ -23,11 +25,15 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('rest-auth/', include('rest_auth.urls')),
-    path('rest-auth/registration/', include('rest_auth.registration.urls')),
     path('rest-auth/kakao/', views.KakaoLogin.as_view()),
+    path('rest-auth/registration/', include('rest_auth.registration.urls')),
     path('', include('django.contrib.auth.urls')),
 
     #path('doc/', schema_view),
+    path('api-jwt-auth/', obtain_jwt_token),
+    path('api-jwt-auth/refresh/', refresh_jwt_token),
+    path('api-jwt-auth/verify/', verify_jwt_token),
+
 
     path('userinfo/', include('userinfo.urls')),
     path('video/', include('video.urls')),
