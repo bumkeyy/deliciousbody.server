@@ -10,7 +10,7 @@ WSGI_APPLICATION = 'config.wsgi.deploy.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': config_secret_deploy['database']['name'],
         'USER': config_secret_deploy['database']['user'],
         'PASSWORD': config_secret_deploy['database']['password'],

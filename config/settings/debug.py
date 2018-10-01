@@ -8,7 +8,7 @@ ALLOWED_HOSTS = config_secret_debug['django']['allowed_hosts']
 # WSGI application
 WSGI_APPLICATION = 'config.wsgi.debug.application'
 
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -20,10 +20,10 @@ DATABASES = {
     }
 }
 '''
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+'''
