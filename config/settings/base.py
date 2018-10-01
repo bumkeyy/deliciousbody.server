@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'userinfo',
     'video',
     'push',
+    'part_history',
 
 ]
 
@@ -132,8 +133,8 @@ USE_L10N = True
 USE_TZ = True
 
 
-STATIC_URL = 'https://storage.googleapis.com/delicious-storage/static/'
-STATIC_ROOT = 'static/'
+STATIC_URL = config_secret_common['static']['url']
+STATIC_ROOT = config_secret_common['static']['root']
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -146,6 +147,11 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_USERNAME_REQUIRED = False
 
+# email 인증
+#ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+OLD_PASSWORD_FIELD_ENABLED = True
+
 AUTHENTICATION_BACKENDS = (
    "django.contrib.auth.backends.ModelBackend",
    "allauth.account.auth_backends.AuthenticationBackend"
@@ -155,8 +161,8 @@ AUTHENTICATION_BACKENDS = (
 # Token 인증 사용
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+        #'rest_framework.authentication.BasicAuthentication',
+        #'rest_framework.authentication.SessionAuthentication',
         #'rest_framework.authentication.TokenAuthentication',
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     )
