@@ -21,5 +21,8 @@ class UserInfo(models.Model):
     is_push = models.BooleanField(default=True)
     is_subscription = models.BooleanField(default=True)
 
+    phone_model = models.CharField(max_length=30, blank=True)
+    push_id = models.CharField(max_length=30, blank=True)
+
     def __str__(self):
         return self.name

@@ -10,22 +10,21 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
-import os
+import os, json
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ROOT_DIR = os.path.dirname(BASE_DIR)
+
+CONFIG_SECRET_DIR = os.path.join(ROOT_DIR, 'deliciousbody_api_server/.config_secret')
+CONFIG_SECRET_COMMON_FILE = os.path.join(CONFIG_SECRET_DIR, 'settings_common.json')
+CONFIG_SECRET_DEBUG_FILE = os.path.join(CONFIG_SECRET_DIR, 'settings_debug.json')
+CONFIG_SECRET_DEPLOY_FILE = os.path.join(CONFIG_SECRET_DIR, 'settings_deploy.json')
+
+config_secret_common = json.loads(open(CONFIG_SECRET_COMMON_FILE).read())
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'vyj+o-i@817*h%%ay*a=jr@+_=1@lf2=osf30zb@q)o6_yi3m2'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+SECRET_KEY = config_secret_common['django']['secret_key']
 
 
 # Application definition
@@ -99,41 +98,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'deliciousbody_api_server.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-'''
-DATABASES = {
-    'default': {
-        'ENGINuE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'delicious_database',
-        'USER': 'sample_user',
-        'PASSWORD': 'sample_password',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'delicious_database',
-        'USER': 'bumkey',
-        'PASSWORD': 'elfqk_1290',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
-}
-'''
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
@@ -207,10 +172,10 @@ REST_USE_JWT = True
 
 # smtp 설정
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = 'delideliciousbody@gmail.com'
-EMAIL_HOST_PASSWORD = '20180222as'
-EMAIL_PORT = 587
+EMAIL_HOST = config_secret_common['email']['host']
+EMAIL_HOST_USER = config_secret_common['email']['host_user']
+EMAIL_HOST_PASSWORD = config_secret_common['email']['host_password']
+EMAIL_PORT = config_secret_common['email']['port']
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
