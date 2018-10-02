@@ -136,8 +136,8 @@ USE_TZ = True
 STATIC_URL = config_secret_common['static']['url']
 STATIC_ROOT = config_secret_common['static']['root']
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = config_secret_common['media']['url']
+MEDIA_ROOT = config_secret_common['media']['root']
 
 
 # Email login 및 username 비활성화, email 검증 비활성
@@ -175,13 +175,14 @@ JWT_AUTH = {
 REST_USE_JWT = True
 
 # smtp 설정
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = config_secret_common['email']['host']
-EMAIL_HOST_USER = config_secret_common['email']['host_user']
-EMAIL_HOST_PASSWORD = config_secret_common['email']['host_password']
-EMAIL_PORT = config_secret_common['email']['port']
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_HOST = config_secret_common['email']['host']
+#EMAIL_HOST_USER = config_secret_common['email']['host_user']
+#EMAIL_HOST_PASSWORD = config_secret_common['email']['host_password']
+#EMAIL_PORT = config_secret_common['email']['port']
+#EMAIL_USE_TLS = True
+#DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
 SOCIALACCOUNT_EMAIL_REQUIRED = False
