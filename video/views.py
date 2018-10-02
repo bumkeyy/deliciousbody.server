@@ -2,7 +2,8 @@ from .serializers import VideoSerializer
 from .models import Video
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import permissions
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import generics, status
+from rest_framework.response import Response
 
 SAFE_METHODS = ('GET', 'HEAD', 'OPTIONS')
 
@@ -27,13 +28,24 @@ class IsSuperUserUpdateOrReadonly(permissions.BasePermission):
         return False
 
 
-class VideoAPIViewSet(ModelViewSet):
 
-    queryset = Video.objects.all()
+
+class VideoListView(generics.GenericAPIView):
     serializer_class = VideoSerializer
     permission_classes = [IsSuperUserUpdateOrReadonly]
-    #permission_classes = [IsAuthenticated]
 
+    def get(self, request):
+        qs = Video.objects.all()
+        serializer = VideoSerializer(qs, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
+class VideoDetailView(generics.GenericAPIView):
+    serializer_class = VideoSerializer
+    permission_classes = [IsSuperUserUpdateOrReadonly]
+
+    def get(self, request, pk):
+        qs = Video.objects.filter(video_id=pk)
+        serializer = VideoSerializer(qs, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
