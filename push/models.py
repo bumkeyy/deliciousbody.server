@@ -1,10 +1,47 @@
 from django.db import models
 from django.contrib.auth.models import User
+from userinfo.models import UserInfo
 
 
 class Push(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    push_list = models.CharField(max_length=500, default="1;1;1;1;2;2;2;2;3;3;3;3;4;4;4;4;5;5;5;5;6;6;6;6;7;7;7;7;8;8;8;8;9;9;9;9;10;10;10;10;11;11;11;11;12;12;12;12;13;13;13;13;14;14;14;14;15;15;15;15;16;16;16;16;17;17;17;17;18;18;18;18;19;19;19;19;20;20;20;20;21;21;21;21;22;22;22;22;23;23;23;23;24;24;24;24;")
+    weekdays_push_list = models.CharField(max_length=500)
+    weekend_push_list = models.CharField(max_length=500)
+    is_check = models.BooleanField(default=False)
+    next_hour = models.IntegerField()
+
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            weekdays_start = UserInfo.objects.filter(user=self.user).values_list('weekdays_start', flat=True).get(pk=1)
+            weekdays_end = UserInfo.objects.filter(user=self.user).values_list('weekdays_end', flat=True).get(pk=1)
+            weekend_start = UserInfo.objects.filter(user=self.user).values_list('weekend_start', flat=True).get(pk=1)
+            weekend_end = UserInfo.objects.filter(user=self.user).values_list('weekend_end', flat=True).get(pk=1)
+
+            weekdays_list = list()
+            weekend_list = list()
+            for i in range(weekdays_start, weekdays_end + 1):
+                weekdays_list.append(i)
+                weekdays_list *= 5
+            for i in range(weekend_start, weekend_end + 1):
+                weekend_list.append(i)
+                weekend_list *= 5
+            self.weekdays_push_list = str(weekdays_list)
+            self.weekend_push_list = str(weekend_list)
+        super(Push, self).save(*args, **kwargs)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
