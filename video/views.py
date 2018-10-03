@@ -1,6 +1,5 @@
 from .serializers import VideoSerializer
 from .models import Video
-from rest_framework.viewsets import ModelViewSet
 from rest_framework import permissions
 from rest_framework import generics, status
 from rest_framework.response import Response
@@ -26,7 +25,6 @@ class IsSuperUserUpdateOrReadonly(permissions.BasePermission):
             return request.user.is_superuser  # request.user.is_staff
 
         return False
-
 
 
 

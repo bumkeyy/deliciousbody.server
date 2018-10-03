@@ -25,4 +25,4 @@ class Video(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return '%d %s' % (self.video_id, self.video_name)
+        return '(%d) %s' % (self.video_id, self.video_name)
