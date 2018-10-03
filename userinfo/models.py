@@ -15,7 +15,7 @@ class UserInfo(models.Model):
     weekend_end = models.IntegerField(default=22, validators=[MinValueValidator(0), MaxValueValidator(24)])
     comment = models.CharField(default="comment", max_length=12)
     avatar = models.CharField(default=".", max_length=100)
-    favorite_list = models.CharField(default="1;2;3;", max_length=1000)
+    favorite_list = models.CharField(default="1;2;3", max_length=1000)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_push = models.BooleanField(default=True)
