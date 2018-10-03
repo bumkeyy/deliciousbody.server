@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'push',
     'part_history',
     'recommend_list',
+    'recommendtouser',
 
 ]
 
