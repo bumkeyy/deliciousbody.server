@@ -8,7 +8,7 @@ class RecommendList(models.Model):
     time = models.IntegerField()
     list_image = models.TextField(validators=[URLValidator()])
 
-    video_list = models.ForeignKey('video_list.VideoList', on_delete=models.CASCADE, related_name = 'video_list')
+    video_list = models.ForeignKey('video_list.VideoList', on_delete=models.CASCADE, related_name = 'video_list', null=True, blank=True)
 
     part1 = models.BooleanField(default=True)
     part2 = models.BooleanField(default=False)

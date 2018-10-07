@@ -54,7 +54,7 @@ class RecommendToUserView(generics.GenericAPIView):
     permission_classes = [IsSuperUserUpdateOrReadonly]
 
     def get(self, request):
-        interest = UserInfo.objects.filter(user=self.request.user).values_list('interested_part', flat=True).get(pk=1)
+        interest = UserInfo.objects.filter(user=self.request.user).values_list('interested_part', flat=True).get()
         interest_list = interest.split(';')
         qs_list = RecommendList.objects.all()
         qs = RecommendList.objects.none()

@@ -3,6 +3,8 @@ from .models import Video
 from rest_framework import permissions
 from rest_framework import generics, status
 from rest_framework.response import Response
+from userinfo.models import UserInfo
+from django.shortcuts import get_object_or_404
 
 SAFE_METHODS = ('GET', 'HEAD', 'OPTIONS')
 
@@ -43,6 +45,23 @@ class VideoDetailView(generics.GenericAPIView):
 
     def get(self, request, pk):
         qs = Video.objects.filter(video_id=pk)
+        serializer = VideoSerializer(qs, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class VideoLikeView(generics.GenericAPIView):
+    serializer_class = VideoSerializer
+    permission_classes = [IsSuperUserUpdateOrReadonly]
+
+    def get(self, request):
+        favorite = UserInfo.objects.filter(user=self.request.user).values_list('favorite_list', flat=True).get()
+        flist = favorite.split(';')
+        v_list = Video.objects.all()
+        qs = Video.objects.none()
+
+        for i in flist:
+            vid = int(i)
+            qs = qs | v_list.filter(video_id = vid)
+
         serializer = VideoSerializer(qs, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
