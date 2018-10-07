@@ -60,12 +60,17 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.kakao',
 
+    # crontab
+    'django_crontab',
+
     # app
     'userinfo',
     'video',
     'push',
     'part_history',
     'recommend_list',
+    'video_list',
+
 ]
 
 SITE_ID = 1
@@ -105,16 +110,7 @@ TEMPLATES = [
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -170,7 +166,7 @@ REST_FRAMEWORK = {
 
 JWT_AUTH = {
     'JWT_ALLOW_REFRESH' : True,
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=3650),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=365),
 }
 
 REST_USE_JWT = True
@@ -188,3 +184,11 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
 SOCIALACCOUNT_EMAIL_REQUIRED = False
 SOCIALACCOUNT_QUERY_EMAIL = True
+
+
+# crontab
+CRONJOBS = [
+    ('* */1 * * *', 'push.task.push_task')
+]
+
+

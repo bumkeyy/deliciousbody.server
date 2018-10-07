@@ -13,6 +13,7 @@ class UserInfoAPIView(generics.GenericAPIView):
 
     def get(self, request):
 
+        #print(request.META.get('HTTP_USERINFO'))
         qs = UserInfo.objects.filter(user=self.request.user)
         serializer = UserInfoSerializer(qs, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

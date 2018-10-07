@@ -2,4 +2,4 @@ from .models import Push
 
 
 def push_task():
-    pass
+    Push.objects.all().push_check
