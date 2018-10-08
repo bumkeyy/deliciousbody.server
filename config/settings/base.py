@@ -61,13 +61,11 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.kakao',
 
     # crontab
-    #'django_crontab',
+    'django_crontab',
 
     # app
     'userinfo',
     'video',
-    'push',
-    'part_history',
     'recommend_list',
     'video_list',
 
@@ -190,12 +188,12 @@ SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
 SOCIALACCOUNT_EMAIL_REQUIRED = False
 SOCIALACCOUNT_QUERY_EMAIL = True
 
-'''
+
 # crontab
 CRONJOBS = [
-    ('* */1 * * *', 'push.task.push_task')
+    ('* */1 * * *', 'userinfo.task.push_task')
 ]
-'''
+
 '''
 DSN_URL = 'https://1f8ceb0fb0d54f399c7440c7da2195c5:ca1a50b695e74b3189f3fd1c7f9994c8@sentry.io/1296175'
 

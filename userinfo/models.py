@@ -26,5 +26,25 @@ class UserInfo(models.Model):
     phone_model = models.CharField(max_length=300, blank=True)
     push_id = models.CharField(max_length=300, blank=True)
 
+    part0 = models.IntegerField(default=0, verbose_name='전신')
+    part1 = models.IntegerField(default=0, verbose_name='목 / 어깨')
+    part2 = models.IntegerField(default=0, verbose_name='가슴')
+    part3 = models.IntegerField(default=0, verbose_name='복부 / 허리')
+    part4 = models.IntegerField(default=0, verbose_name='허벅지 / 무릎')
+    part5 = models.IntegerField(default=0, verbose_name='종아리 / 발목')
+    part6 = models.IntegerField(default=0, verbose_name='팔 / 손목')
+    part7 = models.IntegerField(default=0, verbose_name='등')
+    part8 = models.IntegerField(default=0, verbose_name='엉덩이')
+
+
+    # push info
+    prev_video_id = models.IntegerField(default = 0)
+    next_video_id = models.IntegerField(default = 0)
+    prev_hour = models.IntegerField(default = 0)
+    next_hour = models.IntegerField(default = 0)
+    weekdays_push_list = models.CharField(default='0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27', max_length=500)
+    weekend_push_list = models.CharField(default='0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27', max_length=500)
+
+
     def __str__(self):
         return self.name

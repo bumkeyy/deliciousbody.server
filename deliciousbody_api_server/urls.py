@@ -20,6 +20,5 @@ urlpatterns = [
     path('userinfo/', include('userinfo.urls')),
     path('video/', include('video.urls')),
     path('recommend/', include('recommend_list.urls')),
-    path('push/', include('push.urls')),
     path('videolist/', include('video_list.urls')),
 ]

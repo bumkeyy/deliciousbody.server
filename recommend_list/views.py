@@ -60,8 +60,10 @@ class RecommendToUserView(generics.GenericAPIView):
         qs = RecommendList.objects.none()
 
         # 관심있는 부위를 포함하는 추천 리스트가 있다면 추가
+        if '0' in interest_list:
+            qs = qs_list.filter(part0=True)
         if '1' in interest_list:
-            qs = qs_list.filter(part1 = True)
+            qs = qs | qs_list.filter(part1 = True)
         if '2' in interest_list:
             qs = qs | qs_list.filter(part2 = True)
         if '3' in interest_list:

@@ -10,14 +10,15 @@ class RecommendList(models.Model):
 
     video_list = models.ForeignKey('video_list.VideoList', on_delete=models.CASCADE, related_name = 'video_list', null=True, blank=True)
 
-    part1 = models.BooleanField(default=True)
-    part2 = models.BooleanField(default=False)
-    part3 = models.BooleanField(default=False)
-    part4 = models.BooleanField(default=False)
-    part5 = models.BooleanField(default=False)
-    part6 = models.BooleanField(default=False)
-    part7 = models.BooleanField(default=False)
-    part8 = models.BooleanField(default=False)
+    part0 = models.BooleanField(default=True, verbose_name='전신')
+    part1 = models.BooleanField(default=False, verbose_name='목 / 어깨')
+    part2 = models.BooleanField(default=False, verbose_name='가슴')
+    part3 = models.BooleanField(default=False, verbose_name='복부 / 허리')
+    part4 = models.BooleanField(default=False, verbose_name='허벅지 / 무릎')
+    part5 = models.BooleanField(default=False, verbose_name='종아리 / 발목')
+    part6 = models.BooleanField(default=False, verbose_name='팔 / 손목')
+    part7 = models.BooleanField(default=False, verbose_name='등')
+    part8 = models.BooleanField(default=False, verbose_name='엉덩이')
 
 
     def __str__(self):
