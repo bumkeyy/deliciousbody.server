@@ -4,6 +4,7 @@ from django.db import models
 class VideoList(models.Model):
     list_id = models.AutoField(primary_key=True)
     list_name = models.CharField(max_length=30)
+    list_count = models.IntegerField(default=0)
 
     video1 = models.ForeignKey('video.Video', on_delete=models.CASCADE, blank=True, null=True, related_name='video1')
     video2 = models.ForeignKey('video.Video', on_delete=models.CASCADE, blank=True, null=True, related_name='video2')

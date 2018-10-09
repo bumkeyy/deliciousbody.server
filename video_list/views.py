@@ -3,6 +3,8 @@ from .models import VideoList
 from rest_framework import permissions
 from rest_framework import generics, status
 from rest_framework.response import Response
+from video.models import Video
+from video.serializers import VideoSerializer
 
 SAFE_METHODS = ('GET', 'HEAD', 'OPTIONS')
 
@@ -38,12 +40,26 @@ class VideoListView(generics.GenericAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class VideoDetailView(generics.GenericAPIView):
-    serializer_class = VideoListSerializer
+    serializer_class = VideoSerializer
     permission_classes = [IsSuperUserUpdateOrReadonly]
 
     def get(self, request, pk):
-        qs = VideoList.objects.filter(list_id=pk)
-        serializer = VideoListSerializer(qs, many=True)
+        vl = VideoList.objects.filter(list_id=pk).get()
+        all_video = Video.objects.all()
+        qs = Video.objects.none()
+
+        for i in range(1, vl.list_count + 1):
+            if i == 1:
+                qs = qs | all_video.filter(video_id=vl.video1.video_id)
+            if i == 2:
+                qs = qs | all_video.filter(video_id=vl.video2.video_id)
+            if i == 3:
+                qs = qs | all_video.filter(video_id=vl.video3.video_id)
+            if i == 4:
+                qs = qs | all_video.filter(video_id=vl.video4.video_id)
+            if i == 5:
+                qs = qs | all_video.filter(video_id=vl.video5.video_id)
+        serializer = VideoSerializer(qs, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 

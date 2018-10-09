@@ -79,7 +79,6 @@ class RecommendToUserView(generics.GenericAPIView):
         if '8' in interest_list:
             qs = qs | qs_list.filter(part8 = True)
 
-
         serializer = RecommendListSerializer(qs, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
