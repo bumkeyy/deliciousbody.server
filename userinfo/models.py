@@ -10,7 +10,7 @@ class UserInfo(models.Model):
     activity_level = models.IntegerField(default=2, validators=[MinValueValidator(1), MaxValueValidator(3)]) # 0, 1, 2
     interested_part = models.CharField(default="1;2;3", max_length=20)
     comment = models.CharField(default="comment", max_length=30, blank=True)
-    avatar = models.CharField(default=".", max_length=100)
+    avatar = models.CharField(max_length=100, blank=True, null=True)
     favorite_list = models.CharField(default="1;2;3", max_length=1000)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

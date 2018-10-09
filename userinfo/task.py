@@ -4,12 +4,9 @@ from datetime import datetime
 import random
 import requests
 import json, os
+from django.conf import settings
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CONFIG_SECRET_DIR = os.path.join(BASE_DIR, '.config_secret')
-CONFIG_SECRET_COMMON_FILE = os.path.join(CONFIG_SECRET_DIR, 'settings_common.json')
-config_secret_common = json.loads(open(CONFIG_SECRET_COMMON_FILE).read())
-SERVER_KEY = config_secret_common['fcm']['server_key']
+SERVER_KEY = getattr(settings, 'SERVER_KEY')
 
 def send_fcm(push_id, video_id):
     # fcm 푸시 메세지 요청 주소
@@ -43,13 +40,14 @@ def recommend_video(pk, prev_video_id):
 
 def push_task():
     num = UserInfo.objects.all().count()
+    i = 0
     pk = 1
     # 모든 인스턴스 검사
-    while num != 0 :
+    while i <= num :
 
         try:
             obj = UserInfo.objects.get(pk=pk)
-            num -= 1
+            i += 1
             weekno = datetime.today().weekday()
             # weekdays
             if weekno < 5 and obj.is_push_weekdays :
@@ -57,11 +55,12 @@ def push_task():
                 if datetime.today().hour == obj.next_hour:
                     # 다음 알람시간 선택
                     while True:
-                        tmp_hour = random.choice(obj.weekdays_push_list)
+                        weekdays_push_list = obj.weekdays_push_list.split(',')
+                        tmp_hour = random.choice(weekdays_push_list)
                         # 전 시간 3시간 이내라면 새로운 운동 추천
-                        if obj.next_hour < tmp_hour and obj.next_hour > tmp_hour - 3:
+                        if obj.next_hour < tmp_hour and obj.next_hour >= tmp_hour - 3:
                             # 마지막 시간보다 크다면
-                            if tmp_hour > obj.weekdays_end and tmp_hour - 3 > obj.weekdays_end :
+                            if tmp_hour > obj.weekdays_end or tmp_hour - 3 > obj.weekdays_end :
                                 obj.prev_hour = obj.next_hour
                                 obj.next_hour = obj.weekdays_start
                                 # 추천 운동 정함
@@ -98,11 +97,12 @@ def push_task():
                 if datetime.today().hour == obj.next_hour:
                     # 다음 알람시간 선택
                     while True:
-                        tmp_hour = random.choice(obj.weekend_push_list)
+                        weekend_push_list = obj.weekend_push_list.split(',')
+                        tmp_hour = random.choice(weekend_push_list)
                         # 전 시간 3시간 이내라면 새로운 운동 추천
                         if obj.next_hour < tmp_hour and obj.next_hour > tmp_hour - 3:
                             # 마지막 시간보다 크다면
-                            if tmp_hour > obj.weekend_end and tmp_hour - 3 > obj.weekend_end:
+                            if tmp_hour > obj.weekend_end and tmp_hour - 3 >= obj.weekend_end:
                                 obj.prev_hour = obj.next_hour
                                 obj.next_hour = obj.weekend_start
                                 # 추천 운동 정함
@@ -139,5 +139,8 @@ def push_task():
         except UserInfo.DoesNotExist:
             pass
         pk += 1
+
+        if pk > num + 100:
+            break
 
 
