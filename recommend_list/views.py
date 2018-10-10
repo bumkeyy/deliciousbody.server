@@ -29,7 +29,6 @@ class IsSuperUserUpdateOrReadonly(permissions.BasePermission):
         return False
 
 
-
 class RecommendListView(generics.GenericAPIView):
     serializer_class = RecommendListSerializer
     permission_classes = [IsSuperUserUpdateOrReadonly]

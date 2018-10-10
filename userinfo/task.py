@@ -1,12 +1,14 @@
+import os
+os.environ['DJANGO_SETTINGS_MODULE'] = 'config.settings.debug'
+
 from userinfo.models import UserInfo
 from video.models import Video
 from datetime import datetime
 import random
 import requests
-import json, os
+import json
 from django.conf import settings
-
-SERVER_KEY = getattr(settings, 'SERVER_KEY')
+from django.http import HttpResponse
 
 def send_fcm(push_id, video_id):
     # fcm 푸시 메세지 요청 주소
@@ -14,7 +16,7 @@ def send_fcm(push_id, video_id):
 
     # 인증 정보(서버 키)를 헤더에 담아 전달
     headers = {
-        'Authorization': 'key= '+ SERVER_KEY,
+        'Authorization': 'key='+ getattr(settings, 'SERVER_KEY'),
         'Content-Type': 'application/json; UTF-8',
     }
 
@@ -38,13 +40,12 @@ def recommend_video(pk, prev_video_id):
             return v_obj.video_id
 
 
-def push_task():
+def push_task(request):
     num = UserInfo.objects.all().count()
     i = 0
     pk = 1
     # 모든 인스턴스 검사
-    while i <= num :
-
+    while i < num :
         try:
             obj = UserInfo.objects.get(pk=pk)
             i += 1
@@ -52,39 +53,47 @@ def push_task():
             # weekdays
             if weekno < 5 and obj.is_push_weekdays :
                 # 알람 시간일 경우
-                if datetime.today().hour == obj.next_hour:
+                if datetime.today().hour == obj.weekdays_next_hour:
                     # 다음 알람시간 선택
                     while True:
                         weekdays_push_list = obj.weekdays_push_list.split(',')
-                        tmp_hour = random.choice(weekdays_push_list)
+                        tmp_hour = int(random.choice(weekdays_push_list))
                         # 전 시간 3시간 이내라면 새로운 운동 추천
-                        if obj.next_hour < tmp_hour and obj.next_hour >= tmp_hour - 3:
+                        if obj.weekdays_next_hour < tmp_hour and obj.weekdays_next_hour >= tmp_hour - 3:
                             # 마지막 시간보다 크다면
                             if tmp_hour > obj.weekdays_end or tmp_hour - 3 > obj.weekdays_end :
-                                obj.prev_hour = obj.next_hour
-                                obj.next_hour = obj.weekdays_start
+                                obj.weekdays_prev_hour = obj.weekdays_next_hour
+                                obj.weekdays_next_hour = obj.weekdays_start
                                 # 추천 운동 정함
                                 obj.prev_video_id = obj.next_video_id
                                 obj.next_video_id = recommend_video(pk, obj.prev_video_id)
+                                if not obj.push_id:
+                                    break
                                 send_fcm(obj.push_id, obj.next_video_id)
+                                obj.save()
                                 break
 
                             # 24보다 클 경우 첫 시간에 운동 할당
                             if tmp_hour > 24 :
-                                obj.prev_hour = obj.next_hour
-                                obj.next_hour = obj.weekdays_start
+                                obj.weekdays_prev_hour = obj.weekdays_next_hour
+                                obj.weekdays_next_hour = obj.weekdays_start
                                 # 추천 운동 정함
                                 obj.prev_video_id = obj.next_video_id
                                 obj.next_video_id = recommend_video(pk, obj.prev_video_id)
+                                if not obj.push_id:
+                                    break
                                 send_fcm(obj.push_id, obj.next_video_id)
+                                obj.save()
                                 break
                             else :
-                                obj.prev_hour = obj.next_hour
-                                obj.next_hour = tmp_hour
+                                obj.weekdays_prev_hour = obj.weekdays_next_hour
+                                obj.weekdays_next_hour = tmp_hour
                                 # 추천 운동 정함
                                 obj.prev_video_id = obj.next_video_id
                                 obj.next_video_id = recommend_video(pk, obj.prev_video_id)
-                                send_fcm(obj.push_id, obj.next_video_id)
+                                if not obj.push_id:
+                                    break
+                                obj.save()
                                 break
 
                 # 알람 시간이 아닐 경우 그냥 pass
@@ -94,40 +103,50 @@ def push_task():
             # weekend
             elif weekno > 5 and obj.is_push_weekend :
                 # 알람 시간일 경우
-                if datetime.today().hour == obj.next_hour:
-                    # 다음 알람시간 선택
-                    while True:
-                        weekend_push_list = obj.weekend_push_list.split(',')
-                        tmp_hour = random.choice(weekend_push_list)
-                        # 전 시간 3시간 이내라면 새로운 운동 추천
-                        if obj.next_hour < tmp_hour and obj.next_hour > tmp_hour - 3:
-                            # 마지막 시간보다 크다면
-                            if tmp_hour > obj.weekend_end and tmp_hour - 3 >= obj.weekend_end:
-                                obj.prev_hour = obj.next_hour
-                                obj.next_hour = obj.weekend_start
-                                # 추천 운동 정함
-                                obj.prev_video_id = obj.next_video_id
-                                obj.next_video_id = recommend_video(pk, obj.prev_video_id)
-                                send_fcm(obj.push_id, obj.next_video_id)
-                                break
+                if datetime.today().hour == obj.weekend_next_hour:
+                    # 알람 시간일 경우
+                    if datetime.today().hour == obj.weekend_next_hour:
+                        # 다음 알람시간 선택
+                        while True:
+                            weekend_push_list = obj.weekend_push_list.split(',')
+                            tmp_hour = int(random.choice(weekend_push_list))
+                            # 전 시간 3시간 이내라면 새로운 운동 추천
+                            if obj.weekend_next_hour < tmp_hour and obj.weekend_next_hour >= tmp_hour - 3:
+                                # 마지막 시간보다 크다면
+                                if tmp_hour > obj.weekend_end or tmp_hour - 3 > obj.weekend_end:
+                                    obj.weekend_prev_hour = obj.weekend_next_hour
+                                    obj.weekend_next_hour = obj.weekend_start
+                                    # 추천 운동 정함
+                                    obj.prev_video_id = obj.next_video_id
+                                    obj.next_video_id = recommend_video(pk, obj.prev_video_id)
+                                    if not obj.push_id:
+                                        break
+                                    send_fcm(obj.push_id, obj.next_video_id)
+                                    obj.save()
+                                    break
 
-                            # 24보다 클 경우 첫 시간에 운동 할당
-                            if tmp_hour > 24:
-                                obj.prev_hour = obj.next_hour
-                                obj.next_hour = obj.weekend_start
-                                # 추천 운동 정함
-                                obj.prev_video_id = obj.next_video_id
-                                obj.next_video_id = recommend_video(pk, obj.prev_video_id)
-                                send_fcm(obj.push_id, obj.next_video_id)
-                                break
-                            else:
-                                obj.prev_hour = obj.next_hour
-                                obj.next_hour = tmp_hour
-                                # 추천 운동 정함
-                                obj.prev_video_id = obj.next_video_id
-                                obj.next_video_id = recommend_video(pk, obj.prev_video_id)
-                                send_fcm(obj.push_id, obj.next_video_id)
-                                break
+                                # 24보다 클 경우 첫 시간에 운동 할당
+                                if tmp_hour > 24:
+                                    obj.weekend_prev_hour = obj.weekend_next_hour
+                                    obj.weekend_next_hour = obj.weekend_start
+                                    # 추천 운동 정함
+                                    obj.prev_video_id = obj.next_video_id
+                                    obj.next_video_id = recommend_video(pk, obj.prev_video_id)
+                                    if not obj.push_id:
+                                        break
+                                    send_fcm(obj.push_id, obj.next_video_id)
+                                    obj.save()
+                                    break
+                                else:
+                                    obj.weekend_prev_hour = obj.weekend_next_hour
+                                    obj.weekend_next_hour = tmp_hour
+                                    # 추천 운동 정함
+                                    obj.prev_video_id = obj.next_video_id
+                                    obj.next_video_id = recommend_video(pk, obj.prev_video_id)
+                                    if not obj.push_id:
+                                        break
+                                    obj.save()
+                                    break
 
                 # 알람 시간이 아닐 경우 그냥 pass
                 else:
@@ -140,7 +159,7 @@ def push_task():
             pass
         pk += 1
 
-        if pk > num + 100:
+        if pk > num + 1000:
             break
 
-
+    return HttpResponse("Push time : %d" % datetime.now().hour)

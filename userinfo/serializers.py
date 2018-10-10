@@ -7,7 +7,9 @@ class UserInfoSerializer(ModelSerializer):
     class Meta:
         model = UserInfo
         exclude = ('user', 'prev_video_id', 'next_video_id',
-                   'prev_hour', 'next_hour', 'weekdays_push_list', 'weekend_push_list',)
+                   'weekdays_prev_hour', 'weekdays_next_hour',
+                   'weekend_prev_hour', 'weekend_next_hour',
+                   'weekdays_push_list', 'weekend_push_list',)
 
 
 

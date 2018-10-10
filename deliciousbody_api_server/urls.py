@@ -16,7 +16,6 @@ urlpatterns = [
     path('api-jwt-auth/refresh/', refresh_jwt_token),
     path('api-jwt-auth/verify/', verify_jwt_token),
 
-
     path('userinfo/', include('userinfo.urls')),
     path('video/', include('video.urls')),
     path('recommend/', include('recommend_list.urls')),

@@ -26,7 +26,6 @@ config_secret_common = json.loads(open(CONFIG_SECRET_COMMON_FILE).read())
 
 SECRET_KEY = config_secret_common['django']['secret_key']
 SERVER_KEY = config_secret_common['fcm']['server_key']
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -60,8 +59,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.kakao',
 
-    # crontab
-    'django_crontab',
+    # fcm
+    #'fcm_django',
 
     # app
     'userinfo',
@@ -122,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
@@ -192,17 +191,3 @@ REST_AUTH_SERIALIZERS = {
     'PASSWORD_RESET_SERIALIZER':
         'userinfo.serializers.PasswordResetSerializer',
 }
-
-# crontab
-CRONJOBS = [
-    ('* */1 * * *', 'userinfo.task.push_task')
-]
-
-'''
-DSN_URL = 'https://1f8ceb0fb0d54f399c7440c7da2195c5:ca1a50b695e74b3189f3fd1c7f9994c8@sentry.io/1296175'
-
-RAVEN_CONFIG = {
-    'dsn': '{}'.format(DSN_URL), # DSN_URL을 위에 적어주셔야 동작합니다.
-    'release': raven.fetch_git_sha(BASE_DIR), # Django가 Git으로 관리되는 경우 자동으로 커밋 버전에 따른 트래킹을 해줍니다.
-}
-'''
