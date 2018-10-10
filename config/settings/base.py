@@ -67,7 +67,7 @@ INSTALLED_APPS = [
     'video',
     'recommend_list',
     'video_list',
-
+    'version',
 
     # logging
     #'raven.contrib.django.raven_compat',

@@ -20,4 +20,6 @@ urlpatterns = [
     path('video/', include('video.urls')),
     path('recommend/', include('recommend_list.urls')),
     path('videolist/', include('video_list.urls')),
+    path('version/', include('version.urls')),
+
 ]

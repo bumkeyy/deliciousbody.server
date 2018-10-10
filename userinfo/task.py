@@ -25,7 +25,7 @@ def send_fcm(push_id, video_id):
         'to': push_id,
         'data': {
             'message_body': video_id
-        },
+        }
     }
     response = requests.post(url, headers=headers, data=json.dumps(data))
     print(response)
