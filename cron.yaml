@@ -2,4 +2,4 @@ cron:
 - description: "every hour push check"
   url: /userinfo/task
   schedule: every 1 hours
-  timezone: Asia/Tokyo
+  timezone: Asia/Seoul

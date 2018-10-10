@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from datetime import datetime
 import random
+from pytz import timezone
 
 
 class UserInfoAPIView(generics.GenericAPIView):
@@ -42,17 +43,17 @@ class UserInfoAPIView(generics.GenericAPIView):
             obj.is_man=True
             obj.is_subscription=True
 
-            weekno = datetime.today().weekday()
+            weekno = datetime.now(timezone('Asia/Seoul')).weekday()
             # weekdays
             if weekno < 5:
 
                 while True:
-                    if datetime.now().hour >= obj.weekdays_end - 1:
+                    if datetime.now(timezone('Asia/Seoul')).hour >= obj.weekdays_end - 1:
                         obj.weekdays_next_hour = obj.weekdays_start
                         break
 
                     tmp_hour = int(random.choice(list(range(obj.weekdays_start, obj.weekdays_end + 1))))
-                    if tmp_hour < obj.weekdays_end and datetime.now().hour < tmp_hour:
+                    if tmp_hour < obj.weekdays_end and datetime.now(timezone('Asia/Seoul')).hour < tmp_hour:
                         obj.weekdays_next_hour = tmp_hour
                         break
 
@@ -60,12 +61,12 @@ class UserInfoAPIView(generics.GenericAPIView):
             # weekend
             else :
                 while True:
-                    if datetime.now().hour >= obj.weekend_end - 1:
+                    if datetime.now(timezone('Asia/Seoul')).hour >= obj.weekend_end - 1:
                         obj.weekend_next_hour = obj.weekend_start
                         break
 
                     tmp_hour = int(random.choice(list(range(obj.weekend_start, obj.weekend_end + 1))))
-                    if tmp_hour < obj.weekend_end and datetime.now().hour < tmp_hour:
+                    if tmp_hour < obj.weekend_end and datetime.now(timezone('Asia/Seoul')).hour < tmp_hour:
                         obj.weekend_next_hour = tmp_hour
                         break
                 obj.weekdays_next_hour = obj.weekdays_start
@@ -88,14 +89,14 @@ class UserInfoAPIView(generics.GenericAPIView):
             serializer.save(user=self.request.user)
 
             obj = UserInfo.objects.filter(user=self.request.user).get()
-            weekno = datetime.today().weekday()
+            weekno = datetime.now(timezone('Asia/Seoul')).weekday()
             # weekdays
             if weekno < 5:
                 # range가 변경되서 다음 푸쉬시간이 바뀌어야 한다면
                 if obj.weekdays_next_hour > obj.weekdays_end or obj.weekdays_next_hour < obj.weekdays_start:
 
                     while True:
-                        if datetime.now().hour >= obj.weekdays_end - 1:
+                        if datetime.now(timezone('Asia/Seoul')).hour >= obj.weekdays_end - 1:
                             obj.weekdays_next_hour = obj.weekdays_start
                             break
 
@@ -108,12 +109,12 @@ class UserInfoAPIView(generics.GenericAPIView):
             else :
                 if obj.weekend_next_hour > obj.weekend_end or obj.weekend_next_hour < obj.weekendstart:
                     while True:
-                        if datetime.now().hour >= obj.weekend_end - 1:
+                        if datetime.now(timezone('Asia/Seoul')).hour >= obj.weekend_end - 1:
                             obj.weekend_next_hour = obj.weekend_start
                             break
 
                         tmp_hour = int(random.choice(list(range(obj.weekend_start, obj.weekend_end + 1))))
-                        if tmp_hour < obj.weekend_end and datetime.now().hour < tmp_hour:
+                        if tmp_hour < obj.weekend_end and datetime.now(timezone('Asia/Seoul')).hour < tmp_hour:
                             obj.weekend_next_hour = tmp_hour
                             break
                     obj.weekdays_next_hour = obj.weekdays_start
@@ -136,7 +137,7 @@ class PushAPIView(generics.GenericAPIView):
     def get(self, request):
 
         info = get_object_or_404(UserInfo, user=self.request.user)
-        weekno = datetime.today().weekday()
+        weekno = datetime.now(timezone('Asia/Seoul')).weekday()
         if weekno < 5 :
             info.weekdays_push_list += ', ' + str(info.weekdays_next_hour)
         else:
