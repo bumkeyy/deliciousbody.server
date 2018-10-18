@@ -191,3 +191,5 @@ REST_AUTH_SERIALIZERS = {
     'PASSWORD_RESET_SERIALIZER':
         'userinfo.serializers.PasswordResetSerializer',
 }
+
+ACCOUNT_LOGOUT_ON_GET = True

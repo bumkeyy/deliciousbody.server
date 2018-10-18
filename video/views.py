@@ -4,6 +4,7 @@ from rest_framework import permissions
 from rest_framework import generics, status
 from rest_framework.response import Response
 from userinfo.models import UserInfo
+from django.shortcuts import get_object_or_404
 
 SAFE_METHODS = ('GET', 'HEAD', 'OPTIONS')
 
@@ -42,8 +43,8 @@ class VideoDetailView(generics.GenericAPIView):
     permission_classes = [IsSuperUserUpdateOrReadonly]
 
     def get(self, request, pk):
-        qs = Video.objects.filter(video_id=pk)
-        serializer = VideoSerializer(qs, many=True)
+        obj = Video.objects.filter(video_id=pk).get()
+        serializer = VideoSerializer(obj)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class VideoLikeView(generics.GenericAPIView):

@@ -4,7 +4,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 class UserInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(default="name", max_length=10)
+    name = models.CharField(default="name", max_length=30)
     age = models.IntegerField(default=25, validators=[MinValueValidator(0), MaxValueValidator(200)])
     is_man = models.BooleanField(default=True) # True is man
     activity_level = models.IntegerField(default=2, validators=[MinValueValidator(1), MaxValueValidator(3)]) # 0, 1, 2
@@ -23,8 +23,8 @@ class UserInfo(models.Model):
 
     is_subscription = models.BooleanField(default=True)
 
-    phone_model = models.CharField(max_length=300, blank=True)
-    push_id = models.CharField(max_length=300, blank=True)
+    phone_model = models.CharField(max_length=300, blank=True, null=True)
+    push_id = models.CharField(max_length=300, blank=True, null=True)
 
     part0 = models.IntegerField(default=0, verbose_name='전신')
     part1 = models.IntegerField(default=0, verbose_name='목 / 어깨')

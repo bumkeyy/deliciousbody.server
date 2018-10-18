@@ -6,7 +6,6 @@ from .models import UserInfo
 from rest_framework.response import Response
 from video.models import Video
 from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404
 from datetime import datetime
 import random
 from pytz import timezone
@@ -80,9 +79,14 @@ class UserInfoAPIView(generics.GenericAPIView):
     def put(self, request):
 
         push_id = request.META.get('HTTP_PUSHTOKEN')
+        try:
+            obj = UserInfo.objects.filter(user=self.request.user).get()
+            obj.push_id = str(push_id)
+            obj.save()
+        except UserInfo.DoesNotExist:
+            pass
+
         obj = UserInfo.objects.filter(user=self.request.user).get()
-        obj.push_id = str(push_id)
-        obj.save()
 
         serializer = UserInfoSerializer(obj, data=request.data)
         if serializer.is_valid():
@@ -107,7 +111,7 @@ class UserInfoAPIView(generics.GenericAPIView):
                     obj.weekend_next_hour = obj.weekend_start
             # weekend
             else :
-                if obj.weekend_next_hour > obj.weekend_end or obj.weekend_next_hour < obj.weekendstart:
+                if obj.weekend_next_hour > obj.weekend_end or obj.weekend_next_hour < obj.weekend_start:
                     while True:
                         if datetime.now(timezone('Asia/Seoul')).hour >= obj.weekend_end - 1:
                             obj.weekend_next_hour = obj.weekend_start
@@ -136,7 +140,7 @@ class PushAPIView(generics.GenericAPIView):
 
     def get(self, request):
 
-        info = get_object_or_404(UserInfo, user=self.request.user)
+        info = UserInfo.objects.filter(user=self.requqest.user).get()
         weekno = datetime.now(timezone('Asia/Seoul')).weekday()
         if weekno < 5 :
             info.weekdays_push_list += ', ' + str(info.weekdays_next_hour)

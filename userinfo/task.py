@@ -3,6 +3,8 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'config.settings.debug'
 
 from userinfo.models import UserInfo
 from video.models import Video
+from video.serializers import VideoSerializer
+from django.shortcuts import get_object_or_404
 from datetime import datetime
 import random
 import requests
@@ -11,7 +13,8 @@ from django.conf import settings
 from django.http import HttpResponse
 from pytz import timezone
 
-def send_fcm(push_id, video_id):
+def send_fcm(push_id, video_obj):
+
     # fcm 푸시 메세지 요청 주소
     url = 'https://fcm.googleapis.com/fcm/send'
 
@@ -21,14 +24,48 @@ def send_fcm(push_id, video_id):
         'Content-Type': 'application/json; UTF-8',
     }
 
-    data = {
+    content = {
         'to': push_id,
+        'notification': {
+            #'title' : 'push',
+            'body': '맛있는 운동이 도착했어요.'
+        },
         'data': {
-            'message_body': video_id
+            'video' : VideoSerializer(video_obj).data
         }
     }
-    response = requests.post(url, headers=headers, data=json.dumps(data))
+    response = requests.post(url, headers=headers, data=json.dumps(content))
     print(response)
+
+
+
+# test
+def send_fcm_test(self):
+
+    # fcm 푸시 메세지 요청 주소
+    url = 'https://fcm.googleapis.com/fcm/send'
+
+    obj = get_object_or_404(UserInfo, name='테스터')
+    video_obj = get_object_or_404(Video, video_id = 3)
+
+    # 인증 정보(서버 키)를 헤더에 담아 전달
+    headers = {
+        'Authorization': 'key='+ getattr(settings, 'SERVER_KEY'),
+        'Content-Type': 'application/json; UTF-8',
+    }
+
+    content = {
+        'to': obj.push_id,
+        'notification': {
+            #'title' : '',
+            'body': '맛있는 운동이 도착했어요.'
+        },
+        'data': {
+            'video' : VideoSerializer(video_obj).data
+        }
+    }
+    response = requests.post(url, headers=headers, data=json.dumps(content))
+    return HttpResponse(response)
 
 def recommend_video(pk, prev_video_id):
     interest = UserInfo.objects.filter(pk=pk).values_list('interested_part', flat=True).get()
@@ -38,7 +75,7 @@ def recommend_video(pk, prev_video_id):
         part_id = random.choice(i_list)
         v_obj = Video.objects.filter(main_part=part_id).order_by('?').first()
         if v_obj.video_id != prev_video_id:
-            return v_obj.video_id
+            return v_obj
 
 
 def push_task(request):
@@ -48,7 +85,7 @@ def push_task(request):
     # 모든 인스턴스 검사
     while i < num :
         try:
-            obj = UserInfo.objects.get(pk=pk)
+            obj = UserInfo.objects.filter(pk=pk).get()
             i += 1
             weekno = datetime.now(timezone('Asia/Seoul')).weekday()
             # weekdays
@@ -67,10 +104,11 @@ def push_task(request):
                                 obj.weekdays_next_hour = obj.weekdays_start
                                 # 추천 운동 정함
                                 obj.prev_video_id = obj.next_video_id
-                                obj.next_video_id = recommend_video(pk, obj.prev_video_id)
+                                video_obj = recommend_video(pk, obj.prev_video_id)
+                                obj.next_video_id = video_obj.video_id
                                 if not obj.push_id:
                                     break
-                                send_fcm(obj.push_id, obj.next_video_id)
+                                send_fcm(obj.push_id, video_obj)
                                 obj.save()
                                 break
 
@@ -80,10 +118,11 @@ def push_task(request):
                                 obj.weekdays_next_hour = obj.weekdays_start
                                 # 추천 운동 정함
                                 obj.prev_video_id = obj.next_video_id
-                                obj.next_video_id = recommend_video(pk, obj.prev_video_id)
+                                video_obj = recommend_video(pk, obj.prev_video_id)
+                                obj.next_video_id = video_obj.video_id
                                 if not obj.push_id:
                                     break
-                                send_fcm(obj.push_id, obj.next_video_id)
+                                send_fcm(obj.push_id, video_obj)
                                 obj.save()
                                 break
                             else :
@@ -91,7 +130,11 @@ def push_task(request):
                                 obj.weekdays_next_hour = tmp_hour
                                 # 추천 운동 정함
                                 obj.prev_video_id = obj.next_video_id
-                                obj.next_video_id = recommend_video(pk, obj.prev_video_id)
+                                video_obj = recommend_video(pk, obj.prev_video_id)
+                                obj.next_video_id = video_obj.video_id
+                                if not obj.push_id:
+                                    break
+                                send_fcm(obj.push_id, video_obj)
                                 if not obj.push_id:
                                     break
                                 obj.save()
@@ -118,10 +161,11 @@ def push_task(request):
                                 obj.weekend_next_hour = obj.weekend_start
                                 # 추천 운동 정함
                                 obj.prev_video_id = obj.next_video_id
-                                obj.next_video_id = recommend_video(pk, obj.prev_video_id)
+                                video_obj = recommend_video(pk, obj.prev_video_id)
+                                obj.next_video_id = video_obj.video_id
                                 if not obj.push_id:
                                     break
-                                send_fcm(obj.push_id, obj.next_video_id)
+                                send_fcm(obj.push_id, video_obj)
                                 obj.save()
                                 break
 
@@ -131,10 +175,11 @@ def push_task(request):
                                 obj.weekend_next_hour = obj.weekend_start
                                 # 추천 운동 정함
                                 obj.prev_video_id = obj.next_video_id
-                                obj.next_video_id = recommend_video(pk, obj.prev_video_id)
+                                video_obj = recommend_video(pk, obj.prev_video_id)
+                                obj.next_video_id = video_obj.video_id
                                 if not obj.push_id:
                                     break
-                                send_fcm(obj.push_id, obj.next_video_id)
+                                send_fcm(obj.push_id, video_obj)
                                 obj.save()
                                 break
                             else:
@@ -142,9 +187,11 @@ def push_task(request):
                                 obj.weekend_next_hour = tmp_hour
                                 # 추천 운동 정함
                                 obj.prev_video_id = obj.next_video_id
-                                obj.next_video_id = recommend_video(pk, obj.prev_video_id)
+                                video_obj = recommend_video(pk, obj.prev_video_id)
+                                obj.next_video_id = video_obj.video_id
                                 if not obj.push_id:
                                     break
+                                send_fcm(obj.push_id, video_obj)
                                 obj.save()
                                 break
 
