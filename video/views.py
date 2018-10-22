@@ -4,6 +4,7 @@ from rest_framework import permissions
 from rest_framework import generics, status
 from rest_framework.response import Response
 from userinfo.models import UserInfo
+from django.core.cache import cache
 
 SAFE_METHODS = ('GET', 'HEAD', 'OPTIONS')
 
@@ -42,9 +43,16 @@ class VideoDetailView(generics.GenericAPIView):
     permission_classes = [IsSuperUserUpdateOrReadonly]
 
     def get(self, request, pk):
-        obj = Video.objects.filter(video_id=pk).get()
-        serializer = VideoSerializer(obj)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        cache_name_list = ['v']
+        cache_name_list.append(str(pk))
+        cache_name = ''.join(cache_name_list)
+        data = cache.get(cache_name)
+        if data is None:
+            obj = Video.objects.filter(video_id=pk).get()
+            data = VideoSerializer(obj).data
+            cache.set(cache_name, data)
+
+        return Response(data, status=status.HTTP_200_OK)
 
 class VideoLikeView(generics.GenericAPIView):
     serializer_class = VideoSerializer

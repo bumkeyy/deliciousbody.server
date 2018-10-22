@@ -5,6 +5,7 @@ from rest_framework import permissions
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from django.core.cache import cache
 
 SAFE_METHODS = ('GET', 'HEAD', 'OPTIONS')
 
@@ -55,31 +56,42 @@ class RecommendToUserView(generics.GenericAPIView):
     def get(self, request):
         interest = UserInfo.objects.filter(user=self.request.user).values_list('interested_part', flat=True).get()
         interest_list = interest.split(';')
-        qs_list = RecommendList.objects.all()
-        qs = RecommendList.objects.none()
 
-        # 관심있는 부위를 포함하는 추천 리스트가 있다면 추가
-        if '0' in interest_list:
-            qs = qs_list.filter(part0=True)
-        if '1' in interest_list:
-            qs = qs | qs_list.filter(part1 = True)
-        if '2' in interest_list:
-            qs = qs | qs_list.filter(part2 = True)
-        if '3' in interest_list:
-            qs = qs | qs_list.filter(part3 = True)
-        if '4' in interest_list:
-            qs = qs | qs_list.filter(part4 = True)
-        if '5' in interest_list:
-            qs = qs | qs_list.filter(part5 = True)
-        if '6' in interest_list:
-            qs = qs | qs_list.filter(part6 = True)
-        if '7' in interest_list:
-            qs = qs | qs_list.filter(part7 = True)
-        if '8' in interest_list:
-            qs = qs | qs_list.filter(part8 = True)
+        cache_name_list = ['r']
+        cache_name_list.append(str(interest_list))
+        cache_name = ''.join(cache_name_list)
+        data = cache.get(cache_name)
+        if data is None:
 
-        serializer = RecommendListSerializer(qs, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+            qs_list = cache.get('all_recommend')
+            if qs_list is None:
+                qs_list = RecommendList.objects.all()
+                cache.set('all_recommend', qs_list)
+            qs = RecommendList.objects.none()
+
+            # 관심있는 부위를 포함하는 추천 리스트가 있다면 추가
+            if '0' in interest_list:
+                qs = qs_list.filter(part0=True)
+            if '1' in interest_list:
+                qs = qs | qs_list.filter(part1=True)
+            if '2' in interest_list:
+                qs = qs | qs_list.filter(part2=True)
+            if '3' in interest_list:
+                qs = qs | qs_list.filter(part3=True)
+            if '4' in interest_list:
+                qs = qs | qs_list.filter(part4=True)
+            if '5' in interest_list:
+                qs = qs | qs_list.filter(part5=True)
+            if '6' in interest_list:
+                qs = qs | qs_list.filter(part6=True)
+            if '7' in interest_list:
+                qs = qs | qs_list.filter(part7=True)
+            if '8' in interest_list:
+                qs = qs | qs_list.filter(part8=True)
+
+            data = RecommendListSerializer(qs, many=True).data
+            cache.set(cache_name, data)
+        return Response(data, status=status.HTTP_200_OK)
 
 
 
