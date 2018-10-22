@@ -4,7 +4,6 @@ from rest_framework import permissions
 from rest_framework import generics, status
 from rest_framework.response import Response
 from userinfo.models import UserInfo
-from django.shortcuts import get_object_or_404
 
 SAFE_METHODS = ('GET', 'HEAD', 'OPTIONS')
 

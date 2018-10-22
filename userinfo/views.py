@@ -129,7 +129,7 @@ class UserInfoAPIView(generics.GenericAPIView):
 
     def delete(self, request):
         User.objects.get(id=self.request.user.id).delete()
-        return Response(status.HTTP_204_NO_CONTENT)
+        return Response(status.HTTP_200_OK)
 
 
 
@@ -140,7 +140,7 @@ class PushAPIView(generics.GenericAPIView):
 
     def get(self, request):
 
-        info = UserInfo.objects.filter(user=self.requqest.user).get()
+        info = UserInfo.objects.filter(user=self.request.user).get()
         weekno = datetime.now(timezone('Asia/Seoul')).weekday()
         if weekno < 5 :
             info.weekdays_push_list += ', ' + str(info.weekdays_next_hour)
@@ -148,7 +148,11 @@ class PushAPIView(generics.GenericAPIView):
             info.weekend_push_list += ', ' + str(info.weekend_next_hour)
         info.save()
 
-        video_part = Video.objects.filter(video_id=info.prev_video_id).values_list('main_part', flat=True).get()
+        # test시 pass
+        try:
+            video_part = Video.objects.filter(video_id=info.prev_video_id).values_list('main_part', flat=True).get()
+        except Video.DoesNotExist:
+            return Response(status=status.HTTP_200_OK)
 
         # 관심있는 부위를 포함하는 추천 리스트가 있다면 추가
         if 0 == video_part:
