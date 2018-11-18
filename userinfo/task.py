@@ -45,7 +45,7 @@ def send_fcm_test(self):
     # fcm 푸시 메세지 요청 주소
     url = 'https://fcm.googleapis.com/fcm/send'
 
-    obj = get_object_or_404(UserInfo, name='테스터')
+    obj = get_object_or_404(UserInfo, name='이창민')
     video_obj = get_object_or_404(Video, video_id = 3)
 
     # 인증 정보(서버 키)를 헤더에 담아 전달
@@ -57,8 +57,8 @@ def send_fcm_test(self):
     content = {
         'to': obj.push_id,
         'notification': {
-            #'title' : '',
-            'body': '맛있는 운동이 도착했어요.'
+            'title' : '섹스~',
+            'body': '학교냐?'
         },
         'data': {
             'video' : VideoSerializer(video_obj).data

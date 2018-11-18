@@ -13,7 +13,7 @@ urlpatterns = [
     path('rest-auth/kakao/', views.KakaoLogin.as_view()),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
     path('', include('django.contrib.auth.urls')),
-    #path('accounts/', include('allauth.urls')),
+    path('accounts/', include('allauth.urls')),
 
     path('api-jwt-auth/', obtain_jwt_token),
     path('api-jwt-auth/refresh/', refresh_jwt_token),
