@@ -1,22 +1,19 @@
-from .base import *
+from .common_aws import *
 import os
 
-config_secret_deploy = json.loads(open(CONFIG_SECRET_AWS_DEPLOY_FILE).read())
-
+ALLOWED_HOSTS= ['*']
 DEBUG = False
-ALLOWED_HOSTS = config_secret_deploy['django']['allowed_hosts']
 
-# WSGI application
 WSGI_APPLICATION = 'config.wsgi.prod_aws_eb.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config_secret_deploy['database']['name'],
-        'USER': config_secret_deploy['database']['user'],
-        'PASSWORD': config_secret_deploy['database']['password'],
-        'HOST': config_secret_deploy['database']['host'],
-        'PORT': config_secret_deploy['database']['port'],
+        'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.postgresql_psycopg2'),
+        'HOST': os.environ['DB_HOST'],
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ['DB_PASSWORD'],
+        'NAME': os.environ['DB_NAME'],
+        'PORT': os.environ['DB_PORT'],
     },
 }
 
@@ -26,10 +23,10 @@ STATICFILES_STORAGE = 'deliciousbody_api_server.storages.StaticS3Boto3Storage'
 DEFAULT_FILE_STORAGE = 'deliciousbody_api_server.storages.MediaS3Boto3Storage'
 # S3 파일관리에필요한최소설정
 # 소스코드에 설정정보를 남기지마세요. 환경변수를 통한 설정 추천
-AWS_ACCESS_KEY_ID = config_secret_deploy['aws']['access_key_id']
-AWS_SECRET_ACCESS_KEY = config_secret_deploy['aws']['secret_access_key']
-AWS_STORAGE_BUCKET_NAME = config_secret_deploy['aws']['storage_bucket_name']
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
 # 필수 지정 # 필수 지정 # 필수 지정
-AWS_S3_REGION_NAME = config_secret_deploy['aws']['s3_region_name']
+AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME', 'ap-northeast-2')
 
 AWS_DEFAULT_ACL = None
