@@ -21,7 +21,7 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
 
     # doc
-    "rest_framework_swagger",
+    #"rest_framework_swagger",
 
     # rest-auth
     "rest_auth",
@@ -109,9 +109,11 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_ROOT = os.environ['static_root']
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-MEDIA_ROOT = os.environ['media_root']
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Email login 및 username 비활성화, email 검증 비활성
@@ -122,7 +124,7 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_USERNAME_REQUIRED = False
 
 # email 인증
-#ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 OLD_PASSWORD_FIELD_ENABLED = True
 

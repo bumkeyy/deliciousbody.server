@@ -6,7 +6,7 @@ class RecommendList(models.Model):
     list_name = models.CharField(max_length=30)
     list_count = models.IntegerField()
     time = models.IntegerField()
-    list_image = models.TextField(validators=[URLValidator()])
+    list_image = models.ImageField(upload_to="recommend_image/")
 
     videolist = models.ForeignKey('video_list.VideoList', on_delete=models.CASCADE, related_name = 'videolist', null=True, blank=True)
     #video_list = models.ForeignKey('video.Video', on_delete=models.CASCADE, related_name = 'video_list', null=True, blank=True)
