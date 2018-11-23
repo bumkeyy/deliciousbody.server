@@ -176,3 +176,40 @@ class PushAPIView(generics.GenericAPIView):
 
         info.save()
         return Response(status=status.HTTP_200_OK)
+
+
+
+class TypeAPIView(generics.GenericAPIView):
+    serializer_class = UserInfoSerializer
+    authentication_classes = [JSONWebTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+
+        info = UserInfo.objects.filter(user=self.request.user).get()
+
+        # 관심있는 부위를 포함하는 추천 리스트가 있다면 추가
+        if 0 == pk:
+            info.part0 += 1
+        if 1 == pk:
+            info.part1 += 1
+        if 2 == pk:
+            info.part2 += 1
+        if 3 == pk:
+            info.part3 += 1
+        if 4 == pk:
+            info.part4 += 1
+        if 5 == pk:
+            info.part5 += 1
+        if 6 == pk:
+            info.part6 += 1
+        if 7 == pk:
+            info.part7 += 1
+        if 8 == pk:
+            info.part8 += 1
+
+        info.save()
+        
+        qs = UserInfo.objects.filter(user=self.request.user)
+        serializer = UserInfoSerializer(qs, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
