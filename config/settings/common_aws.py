@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'recommend_list',
     'video_list',
     'version',
+    'accounts', # custom user
 
     # logging
     #'raven.contrib.django.raven_compat',
@@ -168,6 +169,13 @@ SOCIALACCOUNT_QUERY_EMAIL = True
 REST_AUTH_SERIALIZERS = {
     'PASSWORD_RESET_SERIALIZER':
         'userinfo.serializers.PasswordResetSerializer',
+    #'USER_DETAILS_SERIALIZER':
+    #    'accounts.serializers.MyUserDetailSerializer',
+    #'REGISTER_SERIALIZER':
+    #    'accounts.serializers.MyRegisterSerializer',
+}
+REST_AUTH_REGISTER_SERIALIZERS = {
+        'REGISTER_SERIALIZER': 'accounts.serializers.MyRegisterSerializer',
 }
 
 ACCOUNT_LOGOUT_ON_GET = True

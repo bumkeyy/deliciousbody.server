@@ -1,10 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.db.models.signals import post_save
+
 
 class UserInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(default="name", max_length=30)
+    name = models.CharField(default='name', max_length=30)
     age = models.IntegerField(default=25, validators=[MinValueValidator(0), MaxValueValidator(200)])
     is_man = models.BooleanField(default=True) # True is man
     activity_level = models.IntegerField(default=2, validators=[MinValueValidator(1), MaxValueValidator(3)]) # 0, 1, 2
@@ -50,3 +52,15 @@ class UserInfo(models.Model):
 
     def __str__(self):
         return self.name
+
+
+def on_post_save_for_userinfo(sender, **kwargs):
+    if kwargs['created']:
+        userinfo = kwargs['instance']
+        userinfo.name = User.objects.filter(id=userinfo.user.id).values_list('first_name', flat=True).get()
+        userinfo.save()
+
+post_save.connect(on_post_save_for_userinfo, sender=UserInfo)
+
+
+
