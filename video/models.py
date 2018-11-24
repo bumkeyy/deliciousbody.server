@@ -8,7 +8,7 @@ class Video(models.Model):
     level = models.IntegerField(default=2, validators=[MinValueValidator(1), MaxValueValidator(3)])
 
     main_part = models.IntegerField(default=0, verbose_name="주 운동부위" )
-    sub_part = models.IntegerField(default=0, verbose_name="부 운동부위", blank=True)
+    sub_part = models.IntegerField(default=0, verbose_name="부 운동부위", null=True)
 
     time = models.IntegerField()
     description = models.TextField(max_length=300)
