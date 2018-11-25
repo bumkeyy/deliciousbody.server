@@ -22,3 +22,4 @@ class Video(models.Model):
 
     def __str__(self):
         return '(%d) %s' % (self.video_id, self.video_name)
+

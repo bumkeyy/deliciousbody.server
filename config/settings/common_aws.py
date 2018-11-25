@@ -52,7 +52,6 @@ INSTALLED_APPS = [
 
     # logging
     #'raven.contrib.django.raven_compat',
-
 ]
 
 SITE_ID = 1
