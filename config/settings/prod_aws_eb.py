@@ -2,7 +2,7 @@ from .common_aws import *
 import os
 
 ALLOWED_HOSTS= ['*']
-DEBUG = True
+DEBUG = False
 
 WSGI_APPLICATION = 'config.wsgi.prod_aws_eb.application'
 
