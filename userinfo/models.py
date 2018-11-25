@@ -6,22 +6,22 @@ from django.db.models.signals import post_save
 
 class UserInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(default='name', max_length=30)
-    age = models.IntegerField(default=25, validators=[MinValueValidator(0), MaxValueValidator(200)])
-    is_man = models.BooleanField(default=True) # True is man
-    activity_level = models.IntegerField(default=2, validators=[MinValueValidator(1), MaxValueValidator(3)]) # 0, 1, 2
-    interested_part = models.CharField(default="1;2;3", max_length=20)
-    comment = models.CharField(default="comment", max_length=30, blank=True)
-    avatar = models.CharField(max_length=100, blank=True, null=True)
-    favorite_list = models.CharField(default="1;2;3", max_length=1000)
+    name = models.CharField(default='name', max_length=30, verbose_name="이름")
+    age = models.IntegerField(default=25, validators=[MinValueValidator(0), MaxValueValidator(200)], verbose_name="나이")
+    is_man = models.BooleanField(default=True, verbose_name="남자 유무") # True is man
+    activity_level = models.IntegerField(default=2, validators=[MinValueValidator(1), MaxValueValidator(3)], verbose_name="활동 수준") # 0, 1, 2
+    interested_part = models.CharField(default="1;2;3", max_length=20, verbose_name="관심 부위")
+    comment = models.CharField(default="comment", max_length=30, blank=True, verbose_name="동기 부여 멘트")
+    avatar = models.CharField(max_length=100, blank=True, null=True, verbose_name="프로필 사진")
+    favorite_list = models.CharField(default="1;2;3", max_length=1000, verbose_name="좋아요 리스트")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    weekdays_start = models.IntegerField(default=8, validators=[MinValueValidator(0), MaxValueValidator(24)])
-    weekdays_end = models.IntegerField(default=22, validators=[MinValueValidator(0), MaxValueValidator(24)])
-    weekend_start = models.IntegerField(default=8, validators=[MinValueValidator(0), MaxValueValidator(24)])
-    weekend_end = models.IntegerField(default=22, validators=[MinValueValidator(0), MaxValueValidator(24)])
-    is_push_weekdays = models.BooleanField(default=True)
-    is_push_weekend = models.BooleanField(default=True)
+    weekdays_start = models.IntegerField(default=8, validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="주중 알림 시작 시간")
+    weekdays_end = models.IntegerField(default=22, validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="주중 알림 종료 시간")
+    weekend_start = models.IntegerField(default=8, validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="주말 알림 시작 시간")
+    weekend_end = models.IntegerField(default=22, validators=[MinValueValidator(0), MaxValueValidator(24)], verbose_name="주말 알림 종료 시간")
+    is_push_weekdays = models.BooleanField(default=True, verbose_name="주중 알림")
+    is_push_weekend = models.BooleanField(default=True, verbose_name="주말 알림")
 
     is_subscription = models.BooleanField(default=True)
 
