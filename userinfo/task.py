@@ -45,7 +45,7 @@ def send_fcm_test(self):
     # fcm 푸시 메세지 요청 주소
     url = 'https://fcm.googleapis.com/fcm/send'
 
-    obj = get_object_or_404(UserInfo, name='tester')
+    obj = get_object_or_404(UserInfo, name='테스터')
     video_obj = get_object_or_404(Video, video_id = 3)
 
     # 인증 정보(서버 키)를 헤더에 담아 전달
@@ -79,8 +79,6 @@ def recommend_video(pk, prev_video_id):
 
 
 def push_task(request):
-    print("push_task execute")
-    print(datetime.now())
     num = UserInfo.objects.all().count()
     i = 0
     pk = 1
