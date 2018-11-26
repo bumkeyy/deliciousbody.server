@@ -79,6 +79,8 @@ def recommend_video(pk, prev_video_id):
 
 
 def push_task(request):
+    print("push_task execute")
+    print(datetime.now())
     num = UserInfo.objects.all().count()
     i = 0
     pk = 1

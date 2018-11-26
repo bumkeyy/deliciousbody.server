@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'accounts', # custom user
 
     # logging
-    #'raven.contrib.django.raven_compat',
 ]
 
 SITE_ID = 1
@@ -178,3 +177,4 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 }
 
 ACCOUNT_LOGOUT_ON_GET = True
+

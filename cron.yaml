@@ -1,5 +1,6 @@
+
+version: 1
 cron:
-- description: "every hour push check"
-  url: /userinfo/task
-  schedule: every 1 hours
-  timezone: Asia/Seoul
+- name: "every hour push check"
+  url: "/userinfo/task/"
+  schedule: "0 * * * *"
