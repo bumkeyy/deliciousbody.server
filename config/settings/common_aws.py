@@ -132,7 +132,6 @@ AUTHENTICATION_BACKENDS = (
    "allauth.account.auth_backends.AuthenticationBackend"
 )
 
-
 # Token 인증 사용
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
