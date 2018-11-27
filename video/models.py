@@ -7,8 +7,35 @@ class Video(models.Model):
     video_id = models.IntegerField(default=0, unique=True)
     level = models.IntegerField(default=2, validators=[MinValueValidator(1), MaxValueValidator(3)])
 
-    main_part = models.IntegerField(default=0, verbose_name="주 운동부위" )
-    sub_part = models.IntegerField(default=0, verbose_name="부 운동부위", null=True)
+    main_part = models.IntegerField(
+        default=0, 
+        verbose_name="주 운동부위",
+        choices=(
+            (0, '전신'),
+            (1, '목 / 어깨'),
+            (2, '가슴'),
+            (3, '복부 / 허리'),
+            (4, '허벅지 / 무릎'),
+            (5, '종아리 / 발목'),
+            (6, '팔 / 손목'),
+            (7, '등'),
+            (8, '엉덩이')
+        ))
+    sub_part = models.IntegerField(
+        default=0, 
+        verbose_name="부 운동부위", 
+        null=True,
+        choices=(
+            (0, '전신'),
+            (1, '목 / 어깨'),
+            (2, '가슴'),
+            (3, '복부 / 허리'),
+            (4, '허벅지 / 무릎'),
+            (5, '종아리 / 발목'),
+            (6, '팔 / 손목'),
+            (7, '등'),
+            (8, '엉덩이')
+        ))
 
     time = models.IntegerField()
     description = models.TextField(max_length=300)
