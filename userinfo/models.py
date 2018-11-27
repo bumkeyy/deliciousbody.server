@@ -9,7 +9,14 @@ class UserInfo(models.Model):
     name = models.CharField(blank=True, max_length=30, verbose_name="이름")
     age = models.IntegerField(default=25, validators=[MinValueValidator(0), MaxValueValidator(200)], verbose_name="나이")
     is_man = models.BooleanField(default=True, verbose_name="남자 유무") # True is man
-    activity_level = models.IntegerField(default=2, validators=[MinValueValidator(1), MaxValueValidator(3)], verbose_name="활동 수준") # 0, 1, 2
+    activity_level = models.IntegerField(
+            default=2, 
+            validators=[MinValueValidator(1), MaxValueValidator(3)], 
+            choices=(
+            (1, '저'),
+            (2, '중'),
+            (3, '고'),),
+            verbose_name="활동 수준") # 0, 1, 2
     interested_part = models.CharField(default="1;2;3", max_length=20, verbose_name="관심 부위")
     comment = models.CharField(default="comment", max_length=30, blank=True, verbose_name="동기 부여 멘트")
     avatar = models.CharField(max_length=100, blank=True, null=True, verbose_name="프로필 사진")
