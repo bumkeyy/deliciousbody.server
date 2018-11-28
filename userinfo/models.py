@@ -8,7 +8,14 @@ class UserInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(blank=True, max_length=30, verbose_name="이름")
     age = models.IntegerField(default=25, validators=[MinValueValidator(0), MaxValueValidator(200)], verbose_name="나이")
-    is_man = models.BooleanField(default=True, verbose_name="남자 유무") # True is man
+    sex = models.IntegerField(
+            default=1, 
+            validators=[MinValueValidator(1), MaxValueValidator(2)],
+            verbose_name="성별",
+            choices=(
+            (1, '남자'),
+            (2, '여자')
+            )) 
     activity_level = models.IntegerField(
             default=2, 
             validators=[MinValueValidator(1), MaxValueValidator(3)], 
