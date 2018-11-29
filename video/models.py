@@ -5,8 +5,13 @@ from django.core.validators import MinValueValidator, MaxValueValidator, URLVali
 class Video(models.Model):
     video_name = models.CharField(max_length=50)
     video_id = models.IntegerField(default=0, unique=True)
-    level = models.IntegerField(default=2, validators=[MinValueValidator(1), MaxValueValidator(3)])
-
+    level = models.IntegerField(default=2, 
+    validators=[MinValueValidator(1), MaxValueValidator(3)],
+    choices=(
+        (1, '저'),
+        (2, '중'),
+        (3, '고'),),
+    verbose_name="운동 수준")
     main_part = models.IntegerField(
         default=0, 
         verbose_name="주 운동부위",
