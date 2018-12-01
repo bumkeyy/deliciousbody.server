@@ -8,6 +8,5 @@ urlpatterns = [
 
     path('type/<int:pk>/', TypeAPIView.as_view()),
 
-    path('task', push_task),
     path('task/', push_task),
 ]

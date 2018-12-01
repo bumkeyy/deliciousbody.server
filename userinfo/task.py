@@ -75,9 +75,8 @@ def recommend_video(obj):
     while True:
         part_id = random.choice(i_list)
         # 팔 / 손목이거나 등이면 전신으로 수정 (조치)
-        if part_id == 6 or part_id == 7:
+        if part_id == '6' or part_id == '7':
             part_id = 0
-        #print(f'partid : {part_id}')
         # 주 운동부위와 부 운동 부위 전부 검색
         # 운동수가 적기 때문에
         v_obj = Video.objects.filter(Q(main_part=part_id) | Q(sub_part=part_id)).order_by('?').first()
