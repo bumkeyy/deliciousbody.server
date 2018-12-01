@@ -1,6 +1,0 @@
-
-version: 1
-cron:
-- name: "every hour push check"
-  url: "/userinfo/task/"
-  schedule: "0 * * * *"
