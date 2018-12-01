@@ -4,7 +4,7 @@ for your user account at DeliciousBody.{% endblocktrans %}
 
 {% trans "Please go to the following page and choose a new password:" %}
 {% block reset_link %}
-https://delicious-apiserver.appspot.com{% url 'password_reset_confirm' uidb64=uid token=token %}
+http://54.180.35.251{% url 'password_reset_confirm' uidb64=uid token=token %}
 {% endblock %}
 {% trans "Your email, in case you've forgotten:" %} {{ user.get_username }}
 
