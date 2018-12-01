@@ -45,7 +45,7 @@ def send_fcm_test(self):
     # fcm 푸시 메세지 요청 주소
     url = 'https://fcm.googleapis.com/fcm/send'
 
-    obj = get_object_or_404(UserInfo, name='테스터')
+    obj = get_object_or_404(UserInfo, name='기범')
     video_obj = get_object_or_404(Video, video_id = 3)
 
     # 인증 정보(서버 키)를 헤더에 담아 전달
@@ -67,29 +67,29 @@ def send_fcm_test(self):
     response = requests.post(url, headers=headers, data=json.dumps(content))
     return HttpResponse(response)
 
-def recommend_video(pk, prev_video_id):
-    interest = UserInfo.objects.filter(pk=pk).values_list('interested_part', flat=True).get()
+def recommend_video(obj):
+    interest = obj.interested_part
     i_list = interest.split(';')
 
     while True:
         part_id = random.choice(i_list)
+        print(f'{obj.name} and {part_id}')
         v_obj = Video.objects.filter(main_part=part_id).order_by('?').first()
-        if v_obj.video_id != prev_video_id:
+        print(v_obj)
+        if v_obj.video_id != obj.prev_video_id:
             return v_obj
 
 
 def push_task(request):
-    num = UserInfo.objects.all().count()
-    i = 0
-    pk = 1
+    all_userinfo = UserInfo.objects.all()
     # 모든 인스턴스 검사
-    while i < num :
+    for obj in all_userinfo:
         try:
-            obj = UserInfo.objects.filter(pk=pk).get()
-            i += 1
             weekno = datetime.now(timezone('Asia/Seoul')).weekday()
             # weekdays
             if weekno < 5 and obj.is_push_weekdays :
+                print('weekdays')
+                print(obj.name)
                 # 알람 시간일 경우
                 if datetime.now(timezone('Asia/Seoul')).hour == obj.weekdays_next_hour:
                     # 다음 알람시간 선택
@@ -104,7 +104,7 @@ def push_task(request):
                                 obj.weekdays_next_hour = obj.weekdays_start
                                 # 추천 운동 정함
                                 obj.prev_video_id = obj.next_video_id
-                                video_obj = recommend_video(pk, obj.prev_video_id)
+                                video_obj = recommend_video(obj)
                                 obj.next_video_id = video_obj.video_id
                                 if not obj.push_id:
                                     break
@@ -118,7 +118,7 @@ def push_task(request):
                                 obj.weekdays_next_hour = obj.weekdays_start
                                 # 추천 운동 정함
                                 obj.prev_video_id = obj.next_video_id
-                                video_obj = recommend_video(pk, obj.prev_video_id)
+                                video_obj = recommend_video(obj)
                                 obj.next_video_id = video_obj.video_id
                                 if not obj.push_id:
                                     break
@@ -130,7 +130,7 @@ def push_task(request):
                                 obj.weekdays_next_hour = tmp_hour
                                 # 추천 운동 정함
                                 obj.prev_video_id = obj.next_video_id
-                                video_obj = recommend_video(pk, obj.prev_video_id)
+                                video_obj = recommend_video(obj)
                                 obj.next_video_id = video_obj.video_id
                                 if not obj.push_id:
                                     break
@@ -145,7 +145,9 @@ def push_task(request):
                     pass
                 pass
             # weekend
-            elif weekno > 5 and obj.is_push_weekend :
+            elif weekno >= 5 and obj.is_push_weekend :
+                print('weekend')
+                print(obj.name)
                 # 알람 시간일 경우
                 if datetime.now(timezone('Asia/Seoul')).hour == obj.weekend_next_hour:
 
@@ -161,7 +163,7 @@ def push_task(request):
                                 obj.weekend_next_hour = obj.weekend_start
                                 # 추천 운동 정함
                                 obj.prev_video_id = obj.next_video_id
-                                video_obj = recommend_video(pk, obj.prev_video_id)
+                                video_obj = recommend_video(obj)
                                 obj.next_video_id = video_obj.video_id
                                 if not obj.push_id:
                                     break
@@ -175,7 +177,7 @@ def push_task(request):
                                 obj.weekend_next_hour = obj.weekend_start
                                 # 추천 운동 정함
                                 obj.prev_video_id = obj.next_video_id
-                                video_obj = recommend_video(pk, obj.prev_video_id)
+                                video_obj = recommend_video(obj)
                                 obj.next_video_id = video_obj.video_id
                                 if not obj.push_id:
                                     break
@@ -187,7 +189,7 @@ def push_task(request):
                                 obj.weekend_next_hour = tmp_hour
                                 # 추천 운동 정함
                                 obj.prev_video_id = obj.next_video_id
-                                video_obj = recommend_video(pk, obj.prev_video_id)
+                                video_obj = recommend_video(obj)
                                 obj.next_video_id = video_obj.video_id
                                 if not obj.push_id:
                                     break
@@ -204,9 +206,4 @@ def push_task(request):
 
         except UserInfo.DoesNotExist:
             pass
-        pk += 1
-
-        if pk > num + 1000:
-            break
-
     return HttpResponse("Push time : %d" % datetime.now(timezone('Asia/Seoul')).hour)
