@@ -15,12 +15,7 @@ from pytz import timezone
 from django.db.models import Q
 
 
-count = 0
-
 def send_fcm(push_id, video_obj):
-
-    count += 1
-
     # fcm 푸시 메세지 요청 주소
     url = 'https://fcm.googleapis.com/fcm/send'
 
@@ -80,11 +75,13 @@ def recommend_video(obj):
     while True:
         part_id = random.choice(i_list)
         # 팔 / 손목이거나 등이면 전신으로 수정 (조치)
-        if part_id is 6 or part_id is 7:
+        if part_id == 6 or part_id == 7:
             part_id = 0
+        #print(f'partid : {part_id}')
         # 주 운동부위와 부 운동 부위 전부 검색
         # 운동수가 적기 때문에
         v_obj = Video.objects.filter(Q(main_part=part_id) | Q(sub_part=part_id)).order_by('?').first()
+        #print(f'v_obj : {v_obj}')
         '''
         if v_obj is None:
             v_obj = Video.objects.filter(sub_part=part_id).order_by('?').first()
@@ -94,7 +91,6 @@ def recommend_video(obj):
 
 
 def push_task(request):
-    count = 0
     all_userinfo = UserInfo.objects.all()
     # 모든 인스턴스 검사
     for obj in all_userinfo:
@@ -230,4 +226,4 @@ def push_task(request):
 
         except UserInfo.DoesNotExist:
             pass
-    return HttpResponse("Push time : %d and count : %d " % (datetime.now(timezone('Asia/Seoul')).hour, count))
+    return HttpResponse("Push time : %d" % (datetime.now(timezone('Asia/Seoul')).hour))
