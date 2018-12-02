@@ -13,11 +13,11 @@ class VideoInfoTest(APITransactionTestCase):
         self.client = APIClient()
         # user 생성
         url = '/rest-auth/registration/'
-        sdata = {'email': 'test@gmail.com', 'password1': '12345678', 'password2': '12345678'}
+        sdata = {'email': 'test@gmail.com', 'password1': '12345678', 'password2': '12345678', 'first_name':'hello'}
         self.client.post(url, sdata, format='json')
         # jwt 토큰 획득
         get_JWT_url = '/api-jwt-auth/'
-        jwt_data = {'username': 'test', 'password': '12345678'}
+        jwt_data = {'username': 'hello', 'password': '12345678'}
         jwt_response = self.client.post(get_JWT_url, jwt_data)
         token = json.loads(jwt_response.content.decode('utf-8'))["token"]
         # jwt 토큰 헤더에 등록

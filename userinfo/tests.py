@@ -13,7 +13,7 @@ class EmailAccountTest(APITransactionTestCase):
     def _create_user(self):
         url = '/rest-auth/registration/'
         # 성공시
-        sdata = {'email':'test@gmail.com', 'password1':'12345678', 'password2':'12345678'}
+        sdata = {'email':'test@gmail.com', 'password1':'12345678', 'password2':'12345678', 'first_name':'hello'}
         response = self.client.post(url, sdata, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(User.objects.count(), 1)
@@ -53,7 +53,7 @@ class EmailAccountTest(APITransactionTestCase):
     def _change_password_user(self):
         url = '/rest-auth/password/change/'
         get_JWT_url = '/api-jwt-auth/'
-        jwt_data = {'username':'test', 'password':'12345678'}
+        jwt_data = {'username':'hello', 'password':'12345678'}
         jwt_response = self.client.post(get_JWT_url, jwt_data)
         token = json.loads(jwt_response.content.decode('utf-8'))["token"]
         # 성공시
@@ -76,8 +76,7 @@ class EmailAccountTest(APITransactionTestCase):
         print('Success : EmailAccountTest_reset_password_user')
         self._change_password_user()
         print('Success : EmailAccountTest_change_password_user')
-        print('')
-
+        print()
 
 # UserInfo 테스트
 class UserInfoTest(APITransactionTestCase):
@@ -87,11 +86,11 @@ class UserInfoTest(APITransactionTestCase):
         self.client = APIClient()
         # user 생성
         url = '/rest-auth/registration/'
-        sdata = {'email': 'test@gmail.com', 'password1': '12345678', 'password2': '12345678'}
+        sdata = {'email': 'test@gmail.com', 'password1': '12345678', 'password2': '12345678', 'first_name':'hello'}
         self.client.post(url, sdata, format='json')
         # jwt 토큰 획득
         get_JWT_url = '/api-jwt-auth/'
-        jwt_data = {'username': 'test', 'password': '12345678'}
+        jwt_data = {'username': 'hello', 'password': '12345678'}
         jwt_response = self.client.post(get_JWT_url, jwt_data)
         token = json.loads(jwt_response.content.decode('utf-8'))["token"]
         # jwt 토큰 헤더에 등록
@@ -100,11 +99,11 @@ class UserInfoTest(APITransactionTestCase):
     # userinfo 생성 (success : 201)
     def _create_userinfo(self):
         url = '/userinfo/'
-        data = {'name' : 'test'}
+        data = {'name' : 'hello'}
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(UserInfo.objects.count(), 1)
-        self.assertEqual(UserInfo.objects.get().name, 'test')
+        self.assertEqual(UserInfo.objects.get().name, 'hello')
 
     # userinfo 얻기 및 push_id 변경 (success : 200)
     def _get_userinfo(self):
@@ -160,39 +159,3 @@ class UserInfoTest(APITransactionTestCase):
         self._delete_userinfo()
         print('Success : UserInfoTest_delete_userinfo')
         print('')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
