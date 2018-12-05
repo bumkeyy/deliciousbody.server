@@ -103,6 +103,7 @@ def push_task(request):
                     while True:
                         weekdays_push_list = obj.weekdays_push_list.split(',')
                         tmp_hour = int(random.choice(weekdays_push_list))
+                        print(tmp_hour)
 
                         # 전 시간 3시간 이내라면 새로운 운동 추천
                         if obj.weekdays_next_hour < tmp_hour and obj.weekdays_next_hour >= tmp_hour - 3:
@@ -141,9 +142,11 @@ def push_task(request):
                                 break
                             else :
                                 obj.weekdays_prev_hour = obj.weekdays_next_hour
+                                
                                 if tmp_hour == 24:
                                     tmp_hour = 0
-                                obj.weekend_next_hour = tmp_hour
+                                
+                                obj.weekdays_next_hour = tmp_hour
 
                                 # 설정해 놓은 운동 부위가 있다면
                                 if obj.interested_part : 
