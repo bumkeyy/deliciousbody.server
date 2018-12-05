@@ -204,6 +204,8 @@ def push_task(request):
                                 break
                             else:
                                 obj.weekend_prev_hour = obj.weekend_next_hour
+                                if tmp_hour == 24:
+                                    tmp_hour = 0
                                 obj.weekend_next_hour = tmp_hour
                                 # 설정해 놓은 운동 부위가 있다면
                                 if obj.interested_part : 
