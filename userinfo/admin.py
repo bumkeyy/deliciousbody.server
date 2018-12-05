@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import UserInfo
 
 class UserInfoAdmin(admin.ModelAdmin):
-    list_display = ('name','age', 'sex', 'activity_level', 'interested_part',
+    list_display = ('name','age', 'sex', 'activity_level', 'interested_part', 'weekdays_next_hour',
     'weekdays_start', 'weekdays_end', 'weekend_start', 'weekend_end',
     'is_push_weekdays', 'is_push_weekend')
     list_display_links = ['name']
