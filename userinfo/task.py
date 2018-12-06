@@ -108,7 +108,7 @@ def push_task(request):
                         # 전 시간 3시간 이내라면 새로운 운동 추천
                         if obj.weekdays_next_hour < tmp_hour and obj.weekdays_next_hour >= tmp_hour - 3:
                             # 마지막 시간보다 크다면
-                            if tmp_hour > obj.weekdays_end or tmp_hour - 3 > obj.weekdays_end :
+                            if tmp_hour > obj.weekdays_end or tmp_hour - 4 > obj.weekdays_end :
                                 obj.weekdays_prev_hour = obj.weekdays_next_hour
                                 obj.weekdays_next_hour = obj.weekdays_start
 
@@ -177,7 +177,7 @@ def push_task(request):
                         # 전 시간 3시간 이내라면 새로운 운동 추천
                         if obj.weekend_next_hour < tmp_hour and obj.weekend_next_hour >= tmp_hour - 3:
                             # 마지막 시간보다 크다면
-                            if tmp_hour > obj.weekend_end or tmp_hour - 3 > obj.weekend_end:
+                            if tmp_hour > obj.weekend_end or tmp_hour - 4 > obj.weekend_end:
                                 obj.weekend_prev_hour = obj.weekend_next_hour
                                 obj.weekend_next_hour = obj.weekend_start
                                 # 설정해 놓은 운동 부위가 있다면
