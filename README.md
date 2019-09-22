@@ -1,15 +1,14 @@
+## DeliciousBody Server
+
+![스크린샷 2019-09-22 오후 2.42.54](./assets/스크린샷%202019-09-22%20오후%202.42.54.png)
+
 ## api doc
+
 https://app.swaggerhub.com/apis/deliciousbody/delicious_body/1.0.0
 
-## django 서버 설정
+## run
 
 ```py
-$ pwd
-/../deliciousbody_api_server
-
-$ pip3 install -r requirements.txt
-$ python3 manage.py runserver
+pip3 install -r requirements.txt
+python3 manage.py runserver
 ```
-
-
-
